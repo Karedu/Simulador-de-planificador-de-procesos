@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox, QListWidgetItem
+from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox, QListWidgetItem, QTableWidgetItem
 from PyQt5.QtCore import QTimer
 from test1 import Ui_MainWindow 
 import sys
@@ -10,6 +10,8 @@ class ClaseUIDialog(QMainWindow, Ui_MainWindow):
         
         self.setupUi(self)
         self.Button1.clicked.connect(self.test_process)
+        self.ButtonLoadProcess.clicked.connect(self.cargar_procesos)
+        
         self.contador = 1
         self.procesos = [
             {'nombre': 'P1', 'llegada': 0, 'duracion': 11, 'prioridad': 2, 'tiempo_restante': 11},
@@ -21,9 +23,7 @@ class ClaseUIDialog(QMainWindow, Ui_MainWindow):
         self.procesos.sort(key=lambda x: (x['llegada'], x['prioridad']))
         self.tiempo_actual = 0
         self.timer = QTimer()
-        self.timer.timeout.connect(self.test_process)
-
-   
+        self.timer.timeout.connect(self.test_process)   
 
     def test_process(self):       
         if self.procesos:
@@ -43,6 +43,15 @@ class ClaseUIDialog(QMainWindow, Ui_MainWindow):
                   
         else:
             self.timer.stop()  
+            
+    def cargar_procesos(self):
+        self.processTable.setRowCount(len(self.procesos))  # Establecer el número de filas en la tabla
+        for i, proceso in enumerate(self.procesos):
+            self.processTable.setItem(i, 0, QTableWidgetItem(proceso['nombre']))
+            self.processTable.setItem(i, 1, QTableWidgetItem(str(proceso['llegada'])))
+            self.processTable.setItem(i, 2, QTableWidgetItem(str(proceso['duracion'])))
+            self.processTable.setItem(i, 3, QTableWidgetItem(str(proceso['prioridad'])))
+            self.processTable.setItem(i, 4, QTableWidgetItem(str(proceso['tiempo_restante'])))
         
 def main():
     
