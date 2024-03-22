@@ -108,6 +108,7 @@ background-color: rgba(170, 0, 0, 180);</string>
      </item>
     </layout>
    </widget>
+<<<<<<< HEAD
    <widget class="QFrame" name="frame">
     <property name="geometry">
      <rect>
@@ -130,6 +131,8 @@ padding: 8px;
      <enum>QFrame::Raised</enum>
     </property>
    </widget>
+=======
+>>>>>>> 61dc8f198762b5008b5bfbb2fc832074bd2ea345
    <widget class="QFrame" name="frame_2">
     <property name="geometry">
      <rect>
@@ -189,8 +192,13 @@ text-align: center;</string>
    <widget class="QLabel" name="label_7">
     <property name="geometry">
      <rect>
+<<<<<<< HEAD
       <x>110</x>
       <y>310</y>
+=======
+      <x>100</x>
+      <y>290</y>
+>>>>>>> 61dc8f198762b5008b5bfbb2fc832074bd2ea345
       <width>81</width>
       <height>31</height>
      </rect>
@@ -249,6 +257,7 @@ text-align: center;</string>
      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Bloqueados&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
+<<<<<<< HEAD
    <widget class="QLabel" name="label_10">
     <property name="geometry">
      <rect>
@@ -334,6 +343,89 @@ text-align: center;</string>
       <height>192</height>
      </rect>
     </property>
+=======
+   <widget class="QListWidget" name="listWidget">
+    <property name="geometry">
+     <rect>
+      <x>50</x>
+      <y>330</y>
+      <width>181</width>
+      <height>192</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0, 25, 62, 251), stop:1 rgba(255, 255, 255, 255));
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(255, 178, 102, 255), stop:0.55 rgba(235, 148, 61, 255), stop:0.98 rgba(0, 0, 0, 255), stop:1 rgba(0, 0, 0, 0));</string>
+    </property>
+   </widget>
+   <widget class="QWidget" name="widget_2" native="true">
+    <property name="geometry">
+     <rect>
+      <x>90</x>
+      <y>230</y>
+      <width>114</width>
+      <height>44</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout_3">
+     <item>
+      <widget class="QPushButton" name="play">
+       <property name="text">
+        <string>Play</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_10">
+       <property name="toolTip">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;right&quot;&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">font: 600 18pt &quot;Segoe UI Semibold&quot;;
+text-align: center;
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(85, 255, 0, 255), stop:1 rgba(255, 255, 255, 255));</string>
+       </property>
+       <property name="text">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="widget_3" native="true">
+    <property name="geometry">
+     <rect>
+      <x>320</x>
+      <y>510</y>
+      <width>114</width>
+      <height>44</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout_4">
+     <item>
+      <widget class="QPushButton" name="play_2">
+       <property name="text">
+        <string>Play</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_11">
+       <property name="toolTip">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;right&quot;&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">font: 600 18pt &quot;Segoe UI Semibold&quot;;
+text-align: center;
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(85, 255, 0, 255), stop:1 rgba(255, 255, 255, 255));</string>
+       </property>
+       <property name="text">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+>>>>>>> 61dc8f198762b5008b5bfbb2fc832074bd2ea345
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">

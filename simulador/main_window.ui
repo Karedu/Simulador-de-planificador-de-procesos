@@ -81,7 +81,7 @@ color: white;</string>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
-      <widget class="QPushButton" name="algoritmo1">
+      <widget class="QPushButton" name="algoritmo22">
        <property name="styleSheet">
         <string notr="true">font: 600 8pt &quot;Yu Gothic UI Semibold&quot;;
 color: white;
@@ -253,7 +253,7 @@ background-color: rgba(170, 0, 0, 180);</string>
      <x>0</x>
      <y>0</y>
      <width>750</width>
-     <height>22</height>
+     <height>26</height>
     </rect>
    </property>
   </widget>
