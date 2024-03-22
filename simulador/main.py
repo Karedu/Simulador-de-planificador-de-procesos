@@ -1,6 +1,6 @@
 import sys
-from PyQt6 import uic
-from PyQt6.QtWidgets import QApplication
+from PyQt5 import uic
+from PyQt5.QtWidgets import QApplication
 
 # iniciar la aplicación
 app = QApplication(sys.argv)
@@ -8,6 +8,7 @@ app = QApplication(sys.argv)
 # cargar los archivos .ui
 main = uic.loadUi("main_window.ui")
 process_planner = uic.loadUi("process_window.ui")
+test_priority = uic.loadUi("test1.ui")
 
 def algoritmo1():
     main.hide()
@@ -46,7 +47,8 @@ def regresar():
 def salir():
     pass
 # botones de los algoritmos
-main.algoritmo1.clicked.connect(algoritmo1)
+
+#main.algoritmo1.clicked.connect(algoritmo1)
 main.algoritmo2.clicked.connect(algoritmo2)
 main.algoritmo3.clicked.connect(algoritmo3)
 main.algoritmo4.clicked.connect(algoritmo4)
