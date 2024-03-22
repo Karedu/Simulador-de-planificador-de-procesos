@@ -14,20 +14,20 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(908, 678)
+        MainWindow.resize(1386, 836)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.Button1 = QtWidgets.QPushButton(self.centralwidget)
-        self.Button1.setGeometry(QtCore.QRect(230, 220, 93, 28))
+        self.Button1.setGeometry(QtCore.QRect(340, 540, 151, 61))
         self.Button1.setObjectName("Button1")
         self.list1 = QtWidgets.QListWidget(self.centralwidget)
-        self.list1.setGeometry(QtCore.QRect(20, 20, 256, 192))
+        self.list1.setGeometry(QtCore.QRect(30, 340, 256, 291))
         self.list1.setObjectName("list1")
         self.list2 = QtWidgets.QListWidget(self.centralwidget)
-        self.list2.setGeometry(QtCore.QRect(290, 20, 256, 192))
+        self.list2.setGeometry(QtCore.QRect(560, 350, 256, 271))
         self.list2.setObjectName("list2")
         self.processTable = QtWidgets.QTableWidget(self.centralwidget)
-        self.processTable.setGeometry(QtCore.QRect(30, 260, 641, 321))
+        self.processTable.setGeometry(QtCore.QRect(30, 20, 781, 271))
         self.processTable.setObjectName("processTable")
         self.processTable.setColumnCount(5)
         self.processTable.setRowCount(0)
@@ -42,11 +42,28 @@ class Ui_MainWindow(object):
         item = QtWidgets.QTableWidgetItem()
         self.processTable.setHorizontalHeaderItem(4, item)
         self.ButtonLoadProcess = QtWidgets.QPushButton(self.centralwidget)
-        self.ButtonLoadProcess.setGeometry(QtCore.QRect(710, 370, 211, 61))
+        self.ButtonLoadProcess.setGeometry(QtCore.QRect(310, 610, 211, 61))
         self.ButtonLoadProcess.setObjectName("ButtonLoadProcess")
+        self.listCPU = QtWidgets.QListWidget(self.centralwidget)
+        self.listCPU.setGeometry(QtCore.QRect(320, 350, 201, 121))
+        self.listCPU.setObjectName("listCPU")
+        self.tableWidget = QtWidgets.QTableWidget(self.centralwidget)
+        self.tableWidget.setGeometry(QtCore.QRect(320, 710, 191, 61))
+        self.tableWidget.setObjectName("tableWidget")
+        self.tableWidget.setColumnCount(0)
+        self.tableWidget.setRowCount(0)
+        self.textBrowser = QtWidgets.QTextBrowser(self.centralwidget)
+        self.textBrowser.setGeometry(QtCore.QRect(350, 310, 121, 31))
+        self.textBrowser.setObjectName("textBrowser")
+        self.ButtonGenerate = QtWidgets.QPushButton(self.centralwidget)
+        self.ButtonGenerate.setGeometry(QtCore.QRect(340, 480, 151, 61))
+        self.ButtonGenerate.setObjectName("ButtonGenerate")
+        self.textBrowser_2 = QtWidgets.QTextBrowser(self.centralwidget)
+        self.textBrowser_2.setGeometry(QtCore.QRect(20, 300, 261, 31))
+        self.textBrowser_2.setObjectName("textBrowser_2")
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 908, 26))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 1386, 26))
         self.menubar.setObjectName("menubar")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
@@ -71,3 +88,15 @@ class Ui_MainWindow(object):
         item = self.processTable.horizontalHeaderItem(4)
         item.setText(_translate("MainWindow", "Tiempo restante"))
         self.ButtonLoadProcess.setText(_translate("MainWindow", "Cargar procesos"))
+        self.textBrowser.setHtml(_translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:18pt; font-weight:600;\">CPU</span></p></body></html>"))
+        self.ButtonGenerate.setText(_translate("MainWindow", "Generar procesos"))
+        self.textBrowser_2.setHtml(_translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:18pt; font-weight:600;\">Procesos listos</span></p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:18pt; font-weight:600;\"><br /></p></body></html>"))
