@@ -1,5 +1,7 @@
 from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox, QListWidgetItem, QTableWidgetItem
 from PyQt5.QtCore import QTimer
+from PyQt5.QtGui import QBrush, QColor
+
 from test1 import Ui_MainWindow 
 import sys
 import random
@@ -14,6 +16,9 @@ class ClaseUIDialog(QMainWindow, Ui_MainWindow):
         self.ButtonLoadProcess.clicked.connect(self.cargar_procesos)
         self.Button1.hide()
         self.ButtonGenerate.clicked.connect(self.generar_procesos)
+        
+        self.proceso_anterior = None
+
         
         self.startProcess = False
         
@@ -40,16 +45,34 @@ class ClaseUIDialog(QMainWindow, Ui_MainWindow):
             if proceso is None:
                 self.tiempo_actual = min(p['llegada'] for p in self.procesos)
             else:
+                if self.proceso_anterior and self.proceso_anterior != proceso['nombre']:
+                    print(self.tiempo_actual)
+                    
+                    processG = QListWidgetItem(str(self.tiempo_actual))          
+                    processG.setForeground(QBrush(QColor('black')))
+                    processG.setBackground(QBrush(QColor('yellow')))
+                    
+                    self.list1.addItem(processG)
+
+
                 print(f"{proceso['nombre']} ejecutándose en el tiempo {self.tiempo_actual}")
                 self.timer.start(300)
                 self.cargar_procesos()
-                self.list1.addItem(QListWidgetItem(str(proceso['nombre'])))                
+                
+                processG = QListWidgetItem(str(proceso['nombre']))            
+            
+                processG.setForeground(QBrush(QColor('white')))
+                processG.setBackground(QBrush(QColor('darkgreen')))
+                
+                self.list1.addItem(processG)
+                              
                 proceso['tiempo_restante'] -= 1
                 self.tiempo_actual += 1
 
                 if proceso['tiempo_restante'] == 0:
-                    
                     self.procesos.remove(proceso)
+
+                self.proceso_anterior = proceso['nombre']
                   
         else:
             self.timer.stop()
@@ -69,8 +92,8 @@ class ClaseUIDialog(QMainWindow, Ui_MainWindow):
             
     def generar_procesos(self):
         
-        num_procesos = random.randint(0, 12)  
-        prioridades = random.sample(range(0, 11), num_procesos)  
+        num_procesos = random.randint(0, 8)  
+        prioridades = random.sample(range(0, 8), num_procesos)  
         self.procesos = []
 
         for i in range(num_procesos):
