@@ -42,32 +42,21 @@ class ClaseUIDialog(QMainWindow, Ui_MainWindow):
     def test_process(self):      #TableGannt  
          
         if self.procesos:
-            proceso = min((p for p in self.procesos if p['llegada'] <= self.tiempo_actual), key=lambda x: x['prioridad'], default=None)                      
+            proceso = min((p for p in self.procesos if p['llegada'] <= self.tiempo_actual), key=lambda x: x['prioridad'], default=None)                     
                    
             if proceso is None:
                 self.tiempo_actual = min(p['llegada'] for p in self.procesos)
             else:
                 if self.proceso_anterior and self.proceso_anterior != proceso['nombre']:
-                    print(self.tiempo_actual)
-                    
+                    print(self.tiempo_actual)                    
                     processG = QListWidgetItem(str(self.tiempo_actual))          
                     processG.setForeground(QBrush(QColor('black')))
-                    processG.setBackground(QBrush(QColor('yellow')))
-                    
+                    processG.setBackground(QBrush(QColor('yellow')))                    
                     self.list1.addItem(processG)
 
 
                 print(f"{proceso['nombre']} ejecutándose en el tiempo {self.tiempo_actual}")
-                self.timer.start(300)
-                self.cargar_procesos()
                 
-                processG = QListWidgetItem(str(proceso['nombre']))            
-            
-                processG.setForeground(QBrush(QColor('white')))
-                processG.setBackground(QBrush(QColor('darkgreen')))
-                
-                self.list1.addItem(processG)
-                              
                 proceso['tiempo_restante'] -= 1
                 self.tiempo_actual += 1
 
@@ -75,11 +64,17 @@ class ClaseUIDialog(QMainWindow, Ui_MainWindow):
                     self.procesos.remove(proceso)
 
                 self.proceso_anterior = proceso['nombre']
+                
+                processG = QListWidgetItem(str(proceso['nombre']))         
+                processG.setForeground(QBrush(QColor('white')))
+                processG.setBackground(QBrush(QColor('darkgreen')))                
+                self.list1.addItem(processG)
+                
+                self.timer.start(300)
+                self.cargar_procesos()             
                   
         else:
             self.timer.stop()
-                     
-        
             
     def cargar_procesos(self):
         
@@ -105,21 +100,21 @@ class ClaseUIDialog(QMainWindow, Ui_MainWindow):
             
             
     def generar_procesos(self):
-        print("!!!!!!!!!!!!!!!")
-        num_procesos = random.randint(1, 8)  
-        prioridades = random.sample(range(0, 8), num_procesos)  
-        self.procesos = []
-        self.procesosAux = []
+                
+        # num_procesos = random.randint(1, 8)  
+        # prioridades = random.sample(range(0, 8), num_procesos)  
+        # self.procesos = []
+        # self.procesosAux = []
 
-        for i in range(num_procesos):
-            nombre = f'P{i+1}'
-            llegada = 0 if i == 0 else random.randint(1, 20)  #que sea almenos 1, 0 en arrive
-            duracion = random.randint(1, 20)
-            prioridad = prioridades[i]
-            tiempo_restante = duracion
+        # for i in range(num_procesos):
+        #     nombre = f'P{i+1}'
+        #     llegada = 0 if i == 0 else random.randint(1, 10)  #que sea almenos 1, 0 en arrive
+        #     duracion = random.randint(1, 12)
+        #     prioridad = prioridades[i]
+        #     tiempo_restante = duracion
 
-            proceso = {'nombre': nombre, 'llegada': llegada, 'duracion': duracion, 'prioridad': prioridad, 'tiempo_restante': tiempo_restante}
-            self.procesos.append(proceso)
+        #     proceso = {'nombre': nombre, 'llegada': llegada, 'duracion': duracion, 'prioridad': prioridad, 'tiempo_restante': tiempo_restante}
+        #     self.procesos.append(proceso)
         self.procesosAux = copy.deepcopy(self.procesos)
         
         
