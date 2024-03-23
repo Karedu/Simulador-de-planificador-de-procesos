@@ -57,7 +57,7 @@ class ClaseUIDialog(QMainWindow, Ui_MainWindow):
 
                 print(f"{proceso['nombre']} ejecutándose en el tiempo {self.tiempo_actual}")
                 self.timer.start(300)
-                self.cargar_procesos()
+                #self.cargar_procesos()
                 
                 processG = QListWidgetItem(str(proceso['nombre']))            
             
@@ -76,7 +76,8 @@ class ClaseUIDialog(QMainWindow, Ui_MainWindow):
                   
         else:
             self.timer.stop()
-        self.cargar_procesos()  
+        self.cargar_procesos()   
+             
         
             
     def cargar_procesos(self):
