@@ -18,6 +18,7 @@ class ClaseUIDialog(QMainWindow, Ui_MainWindow):
         self.Button1.hide()
         self.ButtonGenerate.clicked.connect(self.generar_procesos)
         
+        
         self.proceso_anterior = None
 
         
@@ -52,7 +53,7 @@ class ClaseUIDialog(QMainWindow, Ui_MainWindow):
                     processG = QListWidgetItem(str(self.tiempo_actual))          
                     processG.setForeground(QBrush(QColor('black')))
                     processG.setBackground(QBrush(QColor('yellow')))                    
-                    self.list1.addItem(processG)
+                    self.list1.addItem(processG)                   
 
 
                 print(f"{proceso['nombre']} ejecutándose en el tiempo {self.tiempo_actual}")
@@ -61,7 +62,9 @@ class ClaseUIDialog(QMainWindow, Ui_MainWindow):
                 self.tiempo_actual += 1
 
                 if proceso['tiempo_restante'] == 0:
+                    self.listaListos.addItem("proceso")
                     self.procesos.remove(proceso)
+                    
 
                 self.proceso_anterior = proceso['nombre']
                 
@@ -69,12 +72,19 @@ class ClaseUIDialog(QMainWindow, Ui_MainWindow):
                 processG.setForeground(QBrush(QColor('white')))
                 processG.setBackground(QBrush(QColor('darkgreen')))                
                 self.list1.addItem(processG)
+                self.labelCPU.setText(proceso['nombre'])
                 
-                self.timer.start(300)
+                self.timer.start(50)
                 self.cargar_procesos()             
                   
         else:
+            processG = QListWidgetItem(str(self.tiempo_actual))          
+            processG.setForeground(QBrush(QColor('black')))
+            processG.setBackground(QBrush(QColor('yellow')))                    
+            self.list1.addItem(processG)   
             self.timer.stop()
+            
+        
             
     def cargar_procesos(self):
         
@@ -122,12 +132,12 @@ def main():
     
     app = QApplication(sys.argv)
     
-    ventana = ClaseUIDialog()
-    
-    ventana.setWindowTitle("KKK")
-    ventana.show()
-    
+    ventana = ClaseUIDialog()    
+    ventana.setWindowTitle("Algoritmo de prioridad Expulsivo")
+    ventana.show()    
     app.exec_()
+    
+    print("Terminado!")
     
 if __name__ == "__main__":
     main()
