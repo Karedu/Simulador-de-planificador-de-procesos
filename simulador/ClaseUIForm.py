@@ -5,6 +5,7 @@ from PyQt5.QtGui import QBrush, QColor
 from test1 import Ui_MainWindow 
 import sys
 import random
+import copy
 
 class ClaseUIDialog(QMainWindow, Ui_MainWindow):
     
@@ -29,8 +30,9 @@ class ClaseUIDialog(QMainWindow, Ui_MainWindow):
             {'nombre': 'P3', 'llegada': 12, 'duracion': 2, 'prioridad': 3, 'tiempo_restante': 2},
             {'nombre': 'P4', 'llegada': 2, 'duracion': 10, 'prioridad': 1, 'tiempo_restante': 10},
             {'nombre': 'P5', 'llegada': 9, 'duracion': 16, 'prioridad': 4, 'tiempo_restante': 16}
-        ]       
+        ]     
         
+        self.procesosAux = []          
         
         self.procesos.sort(key=lambda x: (x['llegada'], x['prioridad']))
         self.tiempo_actual = 0
@@ -57,7 +59,7 @@ class ClaseUIDialog(QMainWindow, Ui_MainWindow):
 
                 print(f"{proceso['nombre']} ejecutándose en el tiempo {self.tiempo_actual}")
                 self.timer.start(300)
-                #self.cargar_procesos()
+                self.cargar_procesos()
                 
                 processG = QListWidgetItem(str(proceso['nombre']))            
             
@@ -76,14 +78,15 @@ class ClaseUIDialog(QMainWindow, Ui_MainWindow):
                   
         else:
             self.timer.stop()
-        self.cargar_procesos()   
-             
+                     
         
             
     def cargar_procesos(self):
         
         self.Button1.show()
-        self.processTable.setRowCount(len(self.procesos))  
+        self.processTable.setRowCount(len(self.procesos)) 
+        self.processTable_2.setRowCount(len(self.procesosAux)) 
+         
         for i, proceso in enumerate(self.procesos):
             self.processTable.setItem(i, 0, QTableWidgetItem(proceso['nombre']))
             self.processTable.setItem(i, 1, QTableWidgetItem(str(proceso['llegada'])))
@@ -91,11 +94,22 @@ class ClaseUIDialog(QMainWindow, Ui_MainWindow):
             self.processTable.setItem(i, 3, QTableWidgetItem(str(proceso['prioridad'])))
             self.processTable.setItem(i, 4, QTableWidgetItem(str(proceso['tiempo_restante'])))
             
+        for i, procesoAux in enumerate(self.procesosAux):
+            self.processTable_2.setItem(i, 0, QTableWidgetItem(procesoAux['nombre']))
+            self.processTable_2.setItem(i, 1, QTableWidgetItem(str(procesoAux['llegada'])))
+            self.processTable_2.setItem(i, 2, QTableWidgetItem(str(procesoAux['duracion'])))
+            self.processTable_2.setItem(i, 3, QTableWidgetItem(str(procesoAux['prioridad'])))
+            self.processTable_2.setItem(i, 4, QTableWidgetItem(str(procesoAux['tiempo_restante'])))
+                
+
+            
+            
     def generar_procesos(self):
-        
-        num_procesos = random.randint(0, 8)  
+        print("!!!!!!!!!!!!!!!")
+        num_procesos = random.randint(1, 8)  
         prioridades = random.sample(range(0, 8), num_procesos)  
         self.procesos = []
+        self.procesosAux = []
 
         for i in range(num_procesos):
             nombre = f'P{i+1}'
@@ -106,6 +120,7 @@ class ClaseUIDialog(QMainWindow, Ui_MainWindow):
 
             proceso = {'nombre': nombre, 'llegada': llegada, 'duracion': duracion, 'prioridad': prioridad, 'tiempo_restante': tiempo_restante}
             self.procesos.append(proceso)
+        self.procesosAux = copy.deepcopy(self.procesos)
         
         
 def main():
