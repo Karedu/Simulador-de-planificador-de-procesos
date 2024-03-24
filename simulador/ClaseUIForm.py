@@ -25,6 +25,7 @@ class ClaseUIDialog(QMainWindow, Ui_MainWindow):
         self.startProcess = False
         
         self.contador = 1
+        #Proceso de prueba
         self.procesos = [
             {'nombre': 'P1', 'llegada': 0, 'duracion': 11, 'prioridad': 2, 'tiempo_restante': 11},
             {'nombre': 'P2', 'llegada': 5, 'duracion': 28, 'prioridad': 0, 'tiempo_restante': 28},
@@ -62,7 +63,7 @@ class ClaseUIDialog(QMainWindow, Ui_MainWindow):
                 self.tiempo_actual += 1
 
                 if proceso['tiempo_restante'] == 0:
-                    self.listaListos.addItem("proceso")
+                    self.listaListos.addItem(proceso['nombre'])
                     self.procesos.remove(proceso)
                     
 
@@ -111,20 +112,20 @@ class ClaseUIDialog(QMainWindow, Ui_MainWindow):
             
     def generar_procesos(self):
                 
-        # num_procesos = random.randint(1, 8)  
-        # prioridades = random.sample(range(0, 8), num_procesos)  
-        # self.procesos = []
-        # self.procesosAux = []
+        num_procesos = random.randint(1, 8)  
+        prioridades = random.sample(range(0, 8), num_procesos)  
+        self.procesos = []
+        self.procesosAux = []
 
-        # for i in range(num_procesos):
-        #     nombre = f'P{i+1}'
-        #     llegada = 0 if i == 0 else random.randint(1, 10)  #que sea almenos 1, 0 en arrive
-        #     duracion = random.randint(1, 12)
-        #     prioridad = prioridades[i]
-        #     tiempo_restante = duracion
+        for i in range(num_procesos):
+            nombre = f'P{i+1}'
+            llegada = 0 if i == 0 else random.randint(1, 10)  #que sea almenos 1, 0 en arrive
+            duracion = random.randint(1, 12)
+            prioridad = prioridades[i]
+            tiempo_restante = duracion
 
-        #     proceso = {'nombre': nombre, 'llegada': llegada, 'duracion': duracion, 'prioridad': prioridad, 'tiempo_restante': tiempo_restante}
-        #     self.procesos.append(proceso)
+            proceso = {'nombre': nombre, 'llegada': llegada, 'duracion': duracion, 'prioridad': prioridad, 'tiempo_restante': tiempo_restante}
+            self.procesos.append(proceso)
         self.procesosAux = copy.deepcopy(self.procesos)
         
         

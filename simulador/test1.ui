@@ -46,6 +46,16 @@
       <height>261</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <pointsize>18</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="cursor" stdset="0">
+     <cursorShape>SizeVerCursor</cursorShape>
+    </property>
    </widget>
    <widget class="QTableWidget" name="processTable">
     <property name="geometry">
@@ -243,8 +253,8 @@ p, li { white-space: pre-wrap; }
    <widget class="QLabel" name="labelCPU_2">
     <property name="geometry">
      <rect>
-      <x>520</x>
-      <y>640</y>
+      <x>570</x>
+      <y>630</y>
       <width>31</width>
       <height>31</height>
      </rect>
@@ -271,8 +281,8 @@ p, li { white-space: pre-wrap; }
    <widget class="QLabel" name="labelCPU_3">
     <property name="geometry">
      <rect>
-      <x>520</x>
-      <y>720</y>
+      <x>570</x>
+      <y>710</y>
       <width>31</width>
       <height>31</height>
      </rect>
@@ -299,8 +309,8 @@ p, li { white-space: pre-wrap; }
    <widget class="QTextBrowser" name="textBrowser_5">
     <property name="geometry">
      <rect>
-      <x>550</x>
-      <y>640</y>
+      <x>600</x>
+      <y>630</y>
       <width>221</width>
       <height>41</height>
      </rect>
@@ -316,8 +326,8 @@ p, li { white-space: pre-wrap; }
    <widget class="QTextBrowser" name="textBrowser_6">
     <property name="geometry">
      <rect>
-      <x>550</x>
-      <y>710</y>
+      <x>600</x>
+      <y>700</y>
       <width>221</width>
       <height>51</height>
      </rect>
@@ -330,19 +340,6 @@ p, li { white-space: pre-wrap; }
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:7pt; font-weight:600;&quot;&gt;Tiempo en el que el proceso termino de ejecutarse y dio paso a otro&lt;/span&gt;&lt;/p&gt;
 &lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:7pt; font-weight:600;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:7pt; font-weight:600;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButton">
-    <property name="geometry">
-     <rect>
-      <x>830</x>
-      <y>660</y>
-      <width>231</width>
-      <height>61</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Ver mas datos de la ejecucion</string>
     </property>
    </widget>
   </widget>
