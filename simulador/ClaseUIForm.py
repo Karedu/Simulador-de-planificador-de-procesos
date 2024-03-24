@@ -17,6 +17,7 @@ class ClaseUIDialog(QMainWindow, Ui_MainWindow):
         self.ButtonLoadProcess.clicked.connect(self.cargar_procesos)
         self.Button1.hide()
         self.ButtonGenerate.clicked.connect(self.generar_procesos)
+        self.clearButton.clicked.connect(self.limpiar_ventanas)
         
         
         self.proceso_anterior = None
@@ -54,7 +55,7 @@ class ClaseUIDialog(QMainWindow, Ui_MainWindow):
                     processG = QListWidgetItem(str(self.tiempo_actual))          
                     processG.setForeground(QBrush(QColor('black')))
                     processG.setBackground(QBrush(QColor('yellow')))                    
-                    self.list1.addItem(processG)                   
+                    self.ganntList.addItem(processG)                   
 
 
                 print(f"{proceso['nombre']} ejecutándose en el tiempo {self.tiempo_actual}")
@@ -72,7 +73,7 @@ class ClaseUIDialog(QMainWindow, Ui_MainWindow):
                 processG = QListWidgetItem(str(proceso['nombre']))         
                 processG.setForeground(QBrush(QColor('white')))
                 processG.setBackground(QBrush(QColor('darkgreen')))                
-                self.list1.addItem(processG)
+                self.ganntList.addItem(processG)
                 self.labelCPU.setText(proceso['nombre'])
                 
                 self.timer.start(50)
@@ -82,7 +83,7 @@ class ClaseUIDialog(QMainWindow, Ui_MainWindow):
             processG = QListWidgetItem(str(self.tiempo_actual))          
             processG.setForeground(QBrush(QColor('black')))
             processG.setBackground(QBrush(QColor('yellow')))                    
-            self.list1.addItem(processG)   
+            self.ganntList.addItem(processG)   
             self.timer.stop()
             
         
@@ -106,7 +107,8 @@ class ClaseUIDialog(QMainWindow, Ui_MainWindow):
             self.processTable_2.setItem(i, 2, QTableWidgetItem(str(procesoAux['duracion'])))
             self.processTable_2.setItem(i, 3, QTableWidgetItem(str(procesoAux['prioridad'])))
             self.processTable_2.setItem(i, 4, QTableWidgetItem(str(procesoAux['tiempo_restante'])))
-                
+     
+        print(self.procesos)           
 
             
             
@@ -119,7 +121,7 @@ class ClaseUIDialog(QMainWindow, Ui_MainWindow):
 
         for i in range(num_procesos):
             nombre = f'P{i+1}'
-            llegada = 0 if i == 0 else random.randint(1, 10)  #que sea almenos 1, 0 en arrive
+            llegada = random.randint(0, 10)  #que sea almenos 1, 0 en arrive
             duracion = random.randint(1, 12)
             prioridad = prioridades[i]
             tiempo_restante = duracion
@@ -128,7 +130,15 @@ class ClaseUIDialog(QMainWindow, Ui_MainWindow):
             self.procesos.append(proceso)
         self.procesosAux = copy.deepcopy(self.procesos)
         
+    
+    def limpiar_ventanas(self):
+        self.listaListos.clear()
+        self.ganntList.clear()
+        self.processTable.setRowCount(0)
+        self.processTable_2.setRowCount(0)
+        self.tiempo_actual = 0
         
+    
 def main():
     
     app = QApplication(sys.argv)

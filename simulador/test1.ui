@@ -27,7 +27,7 @@
      <string>Comenzar emulacion</string>
     </property>
    </widget>
-   <widget class="QListWidget" name="list1">
+   <widget class="QListWidget" name="ganntList">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -253,8 +253,8 @@ p, li { white-space: pre-wrap; }
    <widget class="QLabel" name="labelCPU_2">
     <property name="geometry">
      <rect>
-      <x>570</x>
-      <y>630</y>
+      <x>520</x>
+      <y>640</y>
       <width>31</width>
       <height>31</height>
      </rect>
@@ -281,8 +281,8 @@ p, li { white-space: pre-wrap; }
    <widget class="QLabel" name="labelCPU_3">
     <property name="geometry">
      <rect>
-      <x>570</x>
-      <y>710</y>
+      <x>520</x>
+      <y>720</y>
       <width>31</width>
       <height>31</height>
      </rect>
@@ -309,8 +309,8 @@ p, li { white-space: pre-wrap; }
    <widget class="QTextBrowser" name="textBrowser_5">
     <property name="geometry">
      <rect>
-      <x>600</x>
-      <y>630</y>
+      <x>550</x>
+      <y>640</y>
       <width>221</width>
       <height>41</height>
      </rect>
@@ -326,8 +326,8 @@ p, li { white-space: pre-wrap; }
    <widget class="QTextBrowser" name="textBrowser_6">
     <property name="geometry">
      <rect>
-      <x>600</x>
-      <y>700</y>
+      <x>550</x>
+      <y>710</y>
       <width>221</width>
       <height>51</height>
      </rect>
@@ -340,6 +340,19 @@ p, li { white-space: pre-wrap; }
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:7pt; font-weight:600;&quot;&gt;Tiempo en el que el proceso termino de ejecutarse y dio paso a otro&lt;/span&gt;&lt;/p&gt;
 &lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:7pt; font-weight:600;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:7pt; font-weight:600;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="clearButton">
+    <property name="geometry">
+     <rect>
+      <x>830</x>
+      <y>660</y>
+      <width>231</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Limpiar datos</string>
     </property>
    </widget>
   </widget>
