@@ -76,7 +76,7 @@ class ClaseUIDialog(QMainWindow, Ui_MainWindow):
                 self.ganntList.addItem(processG)
                 self.labelCPU.setText(proceso['nombre'])
                 
-                self.timer.start(50)
+                self.timer.start(200)
                 self.cargar_procesos()             
                   
         else:
