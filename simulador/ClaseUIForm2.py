@@ -15,7 +15,7 @@ class ClaseUIDialog(QMainWindow, Ui_MainWindow):
         self.setupUi(self)       
         self.startEmulation.clicked.connect(self.non_preemptive_priority_algorithm)
         self.ButtonLoadProcess.clicked.connect(self.cargar_procesos)        
-       # self.ButtonGenerate.clicked.connect(self.generar_procesos)
+        self.ButtonGenerate.clicked.connect(self.generar_procesos)
         self.clearButton.clicked.connect(self.limpiar_ventanas)        
         
         self.proceso_anterior = None        
@@ -110,6 +110,23 @@ class ClaseUIDialog(QMainWindow, Ui_MainWindow):
             self.processTable_2.setItem(row_position, 2, QTableWidgetItem(str(proceso['duracion'])))
             self.processTable_2.setItem(row_position, 3, QTableWidgetItem(str(proceso['prioridad'])))
             self.processTable_2.setItem(row_position, 4, QTableWidgetItem(str(proceso['tiempo_restante'])))
+            
+    def generar_procesos(self):
+        num_procesos = random.randint(1, 8)  
+        prioridades = random.sample(range(0, 8), num_procesos)  
+        self.procesos = []
+        self.procesosAux = []
+
+        for i in range(num_procesos):
+            nombre = f'P{i+1}'
+            llegada = random.randint(0, 10)  #que sea almenos 1, 0 en arrive
+            duracion = random.randint(1, 12)
+            prioridad = prioridades[i]
+            tiempo_restante = duracion
+
+            proceso = {'nombre': nombre, 'llegada': llegada, 'duracion': duracion, 'prioridad': prioridad, 'tiempo_restante': tiempo_restante}
+            self.procesos.append(proceso)
+        self.procesosAux = copy.deepcopy(self.procesos)
     
     def limpiar_ventanas(self):
        self.listaListos.clear()
