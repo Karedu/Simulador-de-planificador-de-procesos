@@ -70,7 +70,7 @@ class ClaseUIDialog(QMainWindow, Ui_MainWindow):
             while self.procesos and self.procesos[0]['llegada'] <= tiempo_actual:
                 cola.append(self.procesos.pop(0))      
             
-            if cola:  # Comprueba si la cola no está vacía
+            if cola:  
                 cola = ordenar_por_prioridad(cola)
                 proceso_actual = cola.pop(0)        
                 tiempo_de_ejecucion = min(proceso_actual['duracion'], proceso_actual['tiempo_restante'])
@@ -98,11 +98,12 @@ class ClaseUIDialog(QMainWindow, Ui_MainWindow):
                     processG.setBackground(QBrush(QColor('yellow')))                    
                     self.ganntList.addItem(processG)
                     self.listaListos.addItem(proceso_actual['nombre'])
-            else:  # Si la cola está vacía
-                if self.procesos:  # Comprueba si todavía hay procesos que no han llegado
-                    # Incrementa el tiempo_actual al tiempo de llegada del próximo proceso
+            else:  
+                if self.procesos:  
+                   
                     tiempo_actual = self.procesos[0]['llegada']
         
+        self.startEmulation.setEnabled(False)
         return resultado
                 
     def cargar_procesos(self):        
@@ -123,6 +124,8 @@ class ClaseUIDialog(QMainWindow, Ui_MainWindow):
             self.processTable_2.setItem(i, 2, QTableWidgetItem(str(procesoAux['duracion'])))
             self.processTable_2.setItem(i, 3, QTableWidgetItem(str(procesoAux['prioridad'])))
             self.processTable_2.setItem(i, 4, QTableWidgetItem(str(procesoAux['tiempo_restante'])))
+            
+        self.startEmulation.setEnabled(True)
      
         print(self.procesos) 
             
