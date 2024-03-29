@@ -17,12 +17,9 @@ class ClaseUIDialog(QMainWindow, Ui_MainWindow):
         self.ButtonLoadProcess.clicked.connect(self.cargar_procesos)
         self.Button1.hide()
         self.ButtonGenerate.clicked.connect(self.generar_procesos)
-        self.clearButton.clicked.connect(self.limpiar_ventanas)
+        self.clearButton.clicked.connect(self.limpiar_ventanas)        
         
-        
-        self.proceso_anterior = None
-
-        
+        self.proceso_anterior = None        
         self.startProcess = False
         
         self.contador = 1
