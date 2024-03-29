@@ -25,6 +25,8 @@ class ClaseUIDialog(QMainWindow, Ui_MainWindow):
         self.startProcess = False
         
         self.contador = 1
+        
+        
         #Proceso de prueba
         # self.procesos = [ #Ejercicio Original a mano Resultados P1 P4 P5 P3 P2
         #     {'nombre': 'P1', 'llegada': 0, 'duracion': 4, 'prioridad': 2, 'tiempo_restante': 4},
@@ -76,6 +78,7 @@ class ClaseUIDialog(QMainWindow, Ui_MainWindow):
                 tiempo_de_ejecucion = min(proceso_actual['duracion'], proceso_actual['tiempo_restante'])
                 tiempo_actual, proceso_actual = ejecutar_proceso(proceso_actual, tiempo_actual, tiempo_de_ejecucion)
                 
+                
                 resultado.append({
                     'nombre': proceso_actual['nombre'],
                     'inicio': tiempo_actual - tiempo_de_ejecucion,
@@ -103,7 +106,8 @@ class ClaseUIDialog(QMainWindow, Ui_MainWindow):
                    
                     tiempo_actual = self.procesos[0]['llegada']
         
-        self.startEmulation.setEnabled(False)
+        self.startEmulation.setEnabled(False)        
+        self.ganntList.addItem(processG)
         return resultado
                 
     def cargar_procesos(self):        
