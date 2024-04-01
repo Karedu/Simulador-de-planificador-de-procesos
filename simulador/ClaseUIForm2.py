@@ -21,7 +21,7 @@ class ClaseUIDialog(QMainWindow, Ui_MainWindow):
         self.proceso_anterior = None        
         self.startProcess = False
         self.startEmulation.setEnabled(False)  
-        #self.ButtonLoadProcess.setEnabled(False)
+         #self.ButtonLoadProcess.setEnabled(False)
         
         self.contador = 1
         
