@@ -17,36 +17,40 @@ class ClaseUIDialog(QMainWindow, Ui_MainWindow):
         self.ButtonLoadProcess.clicked.connect(self.cargar_procesos)        
         self.ButtonGenerate.clicked.connect(self.generar_procesos)
         self.clearButton.clicked.connect(self.limpiar_ventanas)     
-        
-        self.startEmulation.setEnabled(False)
-   
-        
+                
         self.proceso_anterior = None        
         self.startProcess = False
+        self.startEmulation.setEnabled(False)  
+        #self.ButtonLoadProcess.setEnabled(False)
         
         self.contador = 1
         
+        self.promedio_tiempo_giro = 0
+        self.promedio_tiempo_espera = 0        
         
         #Proceso de prueba
-        # self.procesos = [ #Ejercicio Original a mano Resultados P1 P4 P5 P3 P2
-        #     {'nombre': 'P1', 'llegada': 0, 'duracion': 4, 'prioridad': 2, 'tiempo_restante': 4},
-        #     {'nombre': 'P2', 'llegada': 1, 'duracion': 3, 'prioridad': 3, 'tiempo_restante': 3},
-        #     {'nombre': 'P3', 'llegada': 2, 'duracion': 1, 'prioridad': 4, 'tiempo_restante': 1},
-        #     {'nombre': 'P4', 'llegada': 3, 'duracion': 5, 'prioridad': 5, 'tiempo_restante': 5},
-        #     {'nombre': 'P5', 'llegada': 4, 'duracion': 2, 'prioridad': 5, 'tiempo_restante': 2}
-            # ]
-        self.procesos = [
-        {'nombre': 'P1', 'llegada': 5, 'duracion': 4, 'prioridad': 4, 'tiempo_restante': 4},
-        {'nombre': 'P2', 'llegada': 4, 'duracion': 8, 'prioridad': 1, 'tiempo_restante': 8},
-        {'nombre': 'P3', 'llegada': 7, 'duracion': 5, 'prioridad': 2, 'tiempo_restante': 5},
-        {'nombre': 'P4', 'llegada': 3, 'duracion': 6, 'prioridad': 7, 'tiempo_restante': 6},
-        {'nombre': 'P5', 'llegada': 3, 'duracion': 3, 'prioridad': 3, 'tiempo_restante': 3},
-        {'nombre': 'P6', 'llegada': 9, 'duracion': 11, 'prioridad': 0, 'tiempo_restante': 11},
-        {'nombre': 'P7', 'llegada': 5, 'duracion': 4, 'prioridad': 6, 'tiempo_restante': 4}
-    ]
+        self.procesos = [ #Ejercicio Original a mano Resultados P1 P4 P5 P3 P2
+            {'nombre': 'P1', 'llegada': 0, 'duracion': 4, 'prioridad': 2, 'tiempo_restante': 4},
+            {'nombre': 'P2', 'llegada': 1, 'duracion': 3, 'prioridad': 3, 'tiempo_restante': 3},
+            {'nombre': 'P3', 'llegada': 2, 'duracion': 1, 'prioridad': 4, 'tiempo_restante': 1},
+            {'nombre': 'P4', 'llegada': 3, 'duracion': 5, 'prioridad': 5, 'tiempo_restante': 5},
+            {'nombre': 'P5', 'llegada': 4, 'duracion': 2, 'prioridad': 5, 'tiempo_restante': 2}
+            ]
+    #caso especial 
+    #     self.procesos = [
+    #     {'nombre': 'P1', 'llegada': 5, 'duracion': 4, 'prioridad': 4, 'tiempo_restante': 4},
+    #     {'nombre': 'P2', 'llegada': 4, 'duracion': 8, 'prioridad': 1, 'tiempo_restante': 8},
+    #     {'nombre': 'P3', 'llegada': 7, 'duracion': 5, 'prioridad': 2, 'tiempo_restante': 5},
+    #     {'nombre': 'P4', 'llegada': 3, 'duracion': 6, 'prioridad': 7, 'tiempo_restante': 6},
+    #     {'nombre': 'P5', 'llegada': 3, 'duracion': 3, 'prioridad': 3, 'tiempo_restante': 3},
+    #     {'nombre': 'P6', 'llegada': 9, 'duracion': 11, 'prioridad': 0, 'tiempo_restante': 11},
+    #     {'nombre': 'P7', 'llegada': 5, 'duracion': 4, 'prioridad': 6, 'tiempo_restante': 4}
+    # ]
 
         
-        self.procesosAux = []          
+        self.procesosAux = self.procesos     
+        
+        self.finishTimesList = []
         
        
 
@@ -100,7 +104,17 @@ class ClaseUIDialog(QMainWindow, Ui_MainWindow):
                     processG.setForeground(QBrush(QColor('black')))
                     processG.setBackground(QBrush(QColor('yellow')))                    
                     self.ganntList.addItem(processG)
-                    self.listaListos.addItem(proceso_actual['nombre'])
+                    self.listaListos.addItem(proceso_actual['nombre'])  
+                    
+                    finishTimeItem = QListWidgetItem(f"{proceso_actual['nombre']}: {tiempo_actual}")
+                    
+                    self.finishTimesList.append({
+                        'nombre': proceso_actual['nombre'],
+                        'finalizado': tiempo_actual,
+                        'tiempoGiro': tiempo_actual - proceso_actual['llegada'],
+                        'tiempoEspera': (tiempo_actual - proceso_actual['llegada']) - proceso_actual['duracion']
+                     })                        
+                          
             else:  
                 if self.procesos:  
                    
@@ -108,6 +122,18 @@ class ClaseUIDialog(QMainWindow, Ui_MainWindow):
         
         self.startEmulation.setEnabled(False)        
         self.ganntList.addItem(processG)
+        sum_tg = sum(proceso['tiempoGiro'] for proceso in self.finishTimesList)
+        sum_te = sum(proceso['tiempoEspera'] for proceso in self.finishTimesList)
+
+        self.promedio_tiempo_giro = sum_tg / len(self.finishTimesList)
+        self.promedio_tiempo_espera = sum_te / len(self.finishTimesList)
+        
+        msg = QMessageBox()
+        msg.setIcon(QMessageBox.Information)
+        msg.setText(f"Tiempo promedio de giro: {self.promedio_tiempo_giro:.2f}\nTiempo promedio de espera: {self.promedio_tiempo_espera:.2f}")
+        msg.setWindowTitle("Promedios")
+        msg.exec_()       
+            
         return resultado
                 
     def cargar_procesos(self):        
@@ -131,7 +157,7 @@ class ClaseUIDialog(QMainWindow, Ui_MainWindow):
             
         self.startEmulation.setEnabled(True)
      
-        print(self.procesos) 
+   
             
     def generar_procesos(self):
                 
@@ -139,6 +165,7 @@ class ClaseUIDialog(QMainWindow, Ui_MainWindow):
         prioridades = random.sample(range(0, 8), num_procesos)  
         self.procesos = []
         self.procesosAux = []
+        self.ButtonLoadProcess.setEnabled(True)
 
         for i in range(num_procesos):
             nombre = f'P{i+1}'
@@ -166,9 +193,7 @@ def main():
     ventana = ClaseUIDialog()    
     ventana.setWindowTitle("Algoritmo de prioridad no Expulsivo")
     ventana.show()    
-    app.exec_()
-    
-    print("Terminado!")
-    
+    app.exec_()   
+       
 if __name__ == "__main__":
     main()
