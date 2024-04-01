@@ -17,11 +17,13 @@ class ClaseUIDialog(QMainWindow, Ui_MainWindow):
         self.ButtonLoadProcess.clicked.connect(self.cargar_procesos)        
         self.ButtonGenerate.clicked.connect(self.generar_procesos)
         self.clearButton.clicked.connect(self.limpiar_ventanas)     
+        self.ButtonAverages.clicked.connect(self.mostrar_promedios)
                 
         self.proceso_anterior = None        
         self.startProcess = False
         self.startEmulation.setEnabled(False)  
-         #self.ButtonLoadProcess.setEnabled(False)
+        self.ButtonLoadProcess.setEnabled(False)
+        self.ButtonAverages.setEnabled(False)
         
         self.contador = 1
         
@@ -127,12 +129,9 @@ class ClaseUIDialog(QMainWindow, Ui_MainWindow):
 
         self.promedio_tiempo_giro = sum_tg / len(self.finishTimesList)
         self.promedio_tiempo_espera = sum_te / len(self.finishTimesList)
-        
-        msg = QMessageBox()
-        msg.setIcon(QMessageBox.Information)
-        msg.setText(f"Tiempo promedio de giro: {self.promedio_tiempo_giro:.2f}\nTiempo promedio de espera: {self.promedio_tiempo_espera:.2f}")
-        msg.setWindowTitle("Promedios")
-        msg.exec_()       
+     
+        self.ButtonAverages.setEnabled(True)
+        self.ButtonLoadProcess.setEnabled(False)
             
         return resultado
                 
@@ -184,6 +183,16 @@ class ClaseUIDialog(QMainWindow, Ui_MainWindow):
        self.processTable.setRowCount(0)
        self.processTable_2.setRowCount(0)
        self.tiempo_actual = 0
+       
+       self.ButtonAverages.setEnabled(False)
+       
+       
+    def mostrar_promedios(self):
+        boxOutPrint = QMessageBox()
+        boxOutPrint.setIcon(QMessageBox.Information)
+        boxOutPrint.setText(f"Tiempo promedio de giro: {self.promedio_tiempo_giro:.2f}\nTiempo promedio de espera: {self.promedio_tiempo_espera:.2f}")
+        boxOutPrint.setWindowTitle("Promedios")
+        boxOutPrint.exec_()
              
 
 def main():
