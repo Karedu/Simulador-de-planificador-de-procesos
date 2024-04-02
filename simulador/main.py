@@ -3,9 +3,12 @@ import time
 import random
 from PyQt6 import uic
 from PyQt6.QtWidgets import QApplication
-from Procesos import Process, ticket_randon, win_process, del_ticket_process
 from QRunnable import Worker
 from PyQt6.QtCore import *
+from Procesos import Process, ticket_randon, win_process, del_ticket_process
+from robRobin import MainWindowRobin, startRobRobin
+from FCFS import MainWindowFCFS, startFCFS
+from SJF import MainWindowSJF, startSJF
 
 threadpool = QThreadPool()
 # iniciar la aplicacion
@@ -13,7 +16,10 @@ app = QApplication(sys.argv)
 
 # cargar los archivos .ui
 main = uic.loadUi("main_window.ui")
+process_planner_1 = uic.loadUi("process_window_1.ui")
+process_planner_2 = uic.loadUi("process_window_2.ui")
 process_planner_3 = uic.loadUi("process_window_3.ui")
+process_planner_5 = uic.loadUi("process_window_5.ui")
 process_planner_6 = uic.loadUi("process_window_6.ui")
 
 # variables para la configuracion del simulador
@@ -22,10 +28,26 @@ speed = 1
 stop = False
 
 def algoritmo1():
-    pass
+    main.hide()
+    window = MainWindowFCFS(process_planner_1)
+    process_planner_1.play.clicked.connect(lambda: startFCFS(window))
+    process_planner_1.label_2.setText(main.algoritmo1.text())
+    process_planner_1.show()
 
 def algoritmo2():
-    pass
+    main.hide()
+    window = MainWindowSJF(process_planner_2)
+    process_planner_2.play.clicked.connect(lambda: startSJF(window))
+    process_planner_2.label_2.setText(main.algoritmo2.text())
+    process_planner_2.show()
+
+def clock_cpu():
+    t = 0
+    process_planner.label_10.setText(str(t))
+    while t < 10:
+        time.sleep(1)
+        t += 1
+        process_planner.label_10.setText(str(t))
 
 def simulation_algoritmo3():
     # Simulacion con generacion de procesos aleatorios
@@ -164,10 +186,17 @@ def algoritmo3():
     process_planner_3.show()
 
 def algoritmo4():
-    pass
+    main.hide()
+    process_planner.label_2.setText(main.algoritmo4.text())
+    process_planner.show()
 
 def algoritmo5():
-    pass
+    main.hide()
+    quantum = 4
+    window = MainWindowRobin(process_planner_5)
+    process_planner_5.play.clicked.connect(lambda: startRobRobin(window))
+    process_planner_5.label_2.setText(main.algoritmo5.text())
+    process_planner_5.show()
 
 def simulation_algoritmo6():
     global stop
@@ -345,7 +374,11 @@ main.algoritmo4.clicked.connect(algoritmo4)
 main.algoritmo5.clicked.connect(algoritmo5)
 main.algoritmo6.clicked.connect(algoritmo6)
 main.salir.clicked.connect(quit)
+# process_planner.regresar.clicked.connect(back_to_menu)
+process_planner_1.regresar.clicked.connect(back_to_menu)
+process_planner_2.regresar.clicked.connect(back_to_menu)
 process_planner_3.regresar.clicked.connect(back_to_menu)
+process_planner_5.regresar.clicked.connect(back_to_menu)
 process_planner_6.regresar.clicked.connect(back_to_menu)
 process_planner_3.stop.clicked.connect(stop_simulation)
 process_planner_6.stop.clicked.connect(stop_simulation)
@@ -353,8 +386,10 @@ process_planner_3.spinBox.valueChanged.connect(number_process)
 process_planner_6.spinBox.valueChanged.connect(number_process)
 process_planner_3.spinBox_2.valueChanged.connect(speed_simulation)
 process_planner_6.spinBox_2.valueChanged.connect(speed_simulation)
+process_planner_1.salir.clicked.connect(quit)
+process_planner_2.salir.clicked.connect(quit)
 process_planner_3.salir.clicked.connect(quit)
+process_planner_5.salir.clicked.connect(quit)
 process_planner_6.salir.clicked.connect(quit)
-
 main.show()
 sys.exit(app.exec())
