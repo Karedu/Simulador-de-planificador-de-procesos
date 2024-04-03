@@ -41,13 +41,13 @@ def algoritmo2():
     process_planner_2.label_2.setText(main.algoritmo2.text())
     process_planner_2.show()
 
-def clock_cpu():
-    t = 0
-    process_planner.label_10.setText(str(t))
-    while t < 10:
-        time.sleep(1)
-        t += 1
-        process_planner.label_10.setText(str(t))
+# def clock_cpu():
+#     t = 0
+#     process_planner.label_10.setText(str(t))
+#     while t < 10:
+#         time.sleep(1)
+#         t += 1
+#         process_planner.label_10.setText(str(t))
 
 def simulation_algoritmo3():
     # Simulacion con generacion de procesos aleatorios
@@ -362,6 +362,10 @@ def algoritmo6():
     process_planner_6.show()
 
 def back_to_menu():
+    process_planner_1.hide()
+    process_planner_2.hide()
+    process_planner_5.hide()
+
     process_planner_3.hide()
     process_planner_6.hide()
     main.show()
