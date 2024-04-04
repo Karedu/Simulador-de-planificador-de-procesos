@@ -117,7 +117,7 @@ class ClaseUIDialog(QMainWindow, Ui_MainWindow):
         self.average_turning_time = sum_tg / len(self.finishTimesList)
         self.average_waiting_time = sum_te / len(self.finishTimesList)
      
-        self.ButtonAverages.setEnabled(True)
+        self.ButtonAverages.setEnabled(True) #
         self.ButtonLoadProcess.setEnabled(False)
 
                
