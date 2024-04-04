@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">QWidget#centralwidget{
+background-color: qlineargradient(spread:pad, x1:0.092, y1:0.908909, x2:1, y2:0, stop:0.477273 rgba(26, 76, 107, 255), stop:0.943182 rgba(9, 32, 82, 255));}</string>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QTextBrowser" name="textBrowser_7">
     <property name="geometry">

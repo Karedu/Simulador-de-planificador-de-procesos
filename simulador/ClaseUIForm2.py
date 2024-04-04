@@ -14,10 +14,10 @@ class ClaseUIDialog(QMainWindow, Ui_MainWindow):
         
         self.setupUi(self)       
         self.startEmulation.clicked.connect(self.non_preemptive_priority_algorithm)
-        self.ButtonLoadProcess.clicked.connect(self.cargar_procesos)        
-        self.ButtonGenerate.clicked.connect(self.generar_procesos)
-        self.clearButton.clicked.connect(self.limpiar_ventanas)     
-        self.ButtonAverages.clicked.connect(self.mostrar_promedios)
+        self.ButtonLoadProcess.clicked.connect(self.load_processes)        
+        self.ButtonGenerate.clicked.connect(self.generate_processes)
+        self.clearButton.clicked.connect(self.clean_windows)     
+        self.ButtonAverages.clicked.connect(self.show_averages)
                 
         self.proceso_anterior = None        
         self.startProcess = False
@@ -27,170 +27,156 @@ class ClaseUIDialog(QMainWindow, Ui_MainWindow):
         
         self.contador = 1
         
-        self.promedio_tiempo_giro = 0
-        self.promedio_tiempo_espera = 0        
-        
-        #Proceso de prueba
-        self.procesos = [ #Ejercicio Original a mano Resultados P1 P4 P5 P3 P2
-            {'nombre': 'P1', 'llegada': 0, 'duracion': 4, 'prioridad': 2, 'tiempo_restante': 4},
-            {'nombre': 'P2', 'llegada': 1, 'duracion': 3, 'prioridad': 3, 'tiempo_restante': 3},
-            {'nombre': 'P3', 'llegada': 2, 'duracion': 1, 'prioridad': 4, 'tiempo_restante': 1},
-            {'nombre': 'P4', 'llegada': 3, 'duracion': 5, 'prioridad': 5, 'tiempo_restante': 5},
-            {'nombre': 'P5', 'llegada': 4, 'duracion': 2, 'prioridad': 5, 'tiempo_restante': 2}
-            ]
-    #caso especial 
-    #     self.procesos = [
-    #     {'nombre': 'P1', 'llegada': 5, 'duracion': 4, 'prioridad': 4, 'tiempo_restante': 4},
-    #     {'nombre': 'P2', 'llegada': 4, 'duracion': 8, 'prioridad': 1, 'tiempo_restante': 8},
-    #     {'nombre': 'P3', 'llegada': 7, 'duracion': 5, 'prioridad': 2, 'tiempo_restante': 5},
-    #     {'nombre': 'P4', 'llegada': 3, 'duracion': 6, 'prioridad': 7, 'tiempo_restante': 6},
-    #     {'nombre': 'P5', 'llegada': 3, 'duracion': 3, 'prioridad': 3, 'tiempo_restante': 3},
-    #     {'nombre': 'P6', 'llegada': 9, 'duracion': 11, 'prioridad': 0, 'tiempo_restante': 11},
-    #     {'nombre': 'P7', 'llegada': 5, 'duracion': 4, 'prioridad': 6, 'tiempo_restante': 4}
-    # ]
-
-        
-        self.procesosAux = self.procesos     
-        
-        self.finishTimesList = []
-        
+        self.average_turning_time = 0
+        self.average_waiting_time = 0 
        
+        self.processes = []        
+        self.auxProcesses = self.processes     
+        
+        self.finishTimesList = []        
+        
+        self.timer = QTimer()
+        self.timer.timeout.connect(self.non_preemptive_priority_algorithm)      
+        
 
     def non_preemptive_priority_algorithm(self):
-        def ordenar_por_tiempo_de_llegada():
-            return sorted(self.procesos, key=lambda x: x['llegada'])
         
-        def ordenar_por_prioridad(cola):
-            return sorted(cola, key=lambda x: x['prioridad'], reverse=True)
+
+        def sort_by_arrival_time():
+            return sorted(self.processes, key=lambda x: x['llegada'])
         
-        def ejecutar_proceso(proceso_actual, tiempo_actual, tiempo_de_ejecucion):
-            tiempo_actual += tiempo_de_ejecucion
-            proceso_actual['tiempo_restante'] -= tiempo_de_ejecucion
-            return tiempo_actual, proceso_actual
+        def sort_by_priority(stack):
+            return sorted(stack, key=lambda x: x['prioridad'], reverse=True)
+        
+        def run_process(current_process, current_time, execution_time):
+            current_time += execution_time
+            current_process['tiempo_restante'] -= execution_time
+            return current_time, current_process
     
-        self.procesos = ordenar_por_tiempo_de_llegada()
+        self.processes = sort_by_arrival_time()
         
-        tiempo_actual = 0
-        cola = []  
-        resultado = []  
+        current_time = 0
+        stack = []  
+        result = []  
         
-        while self.procesos or cola:
-            while self.procesos and self.procesos[0]['llegada'] <= tiempo_actual:
-                cola.append(self.procesos.pop(0))      
+        while self.processes or stack:
+            while self.processes and self.processes[0]['llegada'] <= current_time:
+                stack.append(self.processes.pop(0))      
             
-            if cola:  
-                cola = ordenar_por_prioridad(cola)
-                proceso_actual = cola.pop(0)        
-                tiempo_de_ejecucion = min(proceso_actual['duracion'], proceso_actual['tiempo_restante'])
-                tiempo_actual, proceso_actual = ejecutar_proceso(proceso_actual, tiempo_actual, tiempo_de_ejecucion)
+            if stack:  
+                stack = sort_by_priority(stack)
+                current_process = stack.pop(0)        
+                execution_time = min(current_process['duracion'], current_process['tiempo_restante'])
+                current_time, current_process = run_process(current_process, current_time, execution_time)
                 
                 
-                resultado.append({
-                    'nombre': proceso_actual['nombre'],
-                    'inicio': tiempo_actual - tiempo_de_ejecucion,
-                    'fin': tiempo_actual,
-                    'prioridad': proceso_actual['prioridad']
-                })
+                result.append({
+                    'nombre': current_process['nombre'],
+                    'inicio': current_time - execution_time,
+                    'fin': current_time,
+                    'prioridad': current_process['prioridad']
+                })                
                 
-                processG = QListWidgetItem(str(proceso_actual['nombre']))         
+                processG = QListWidgetItem(str(current_process['nombre']))         
                 processG.setForeground(QBrush(QColor('white')))
                 processG.setBackground(QBrush(QColor('darkgreen')))                
                 self.ganntList.addItem(processG)
                 
-                print(f"Proceso {proceso_actual['nombre']} - Inicio: {tiempo_actual - tiempo_de_ejecucion} - Fin: {tiempo_actual} - Prioridad: {proceso_actual['prioridad']}")
+                #print(f"Proceso {current_process['nombre']} - Inicio: {current_time - execution_time} - Fin: {current_time} - Prioridad: {current_process['prioridad']}")
                 
-                if proceso_actual['tiempo_restante'] > 0:
-                    cola.append(proceso_actual)
+                if current_process['tiempo_restante'] > 0:
+                    stack.append(current_process)
                 else:
-                    processG = QListWidgetItem(str(tiempo_actual))          
+                    
+                    processG = QListWidgetItem(str(current_time))          
                     processG.setForeground(QBrush(QColor('black')))
                     processG.setBackground(QBrush(QColor('yellow')))                    
                     self.ganntList.addItem(processG)
-                    self.listaListos.addItem(proceso_actual['nombre'])  
+                    self.listaListos.addItem(current_process['nombre'])                      
                     
-                    finishTimeItem = QListWidgetItem(f"{proceso_actual['nombre']}: {tiempo_actual}")
+                    finishTimeItem = QListWidgetItem(f"{current_process['nombre']}: {current_time}")
                     
                     self.finishTimesList.append({
-                        'nombre': proceso_actual['nombre'],
-                        'finalizado': tiempo_actual,
-                        'tiempoGiro': tiempo_actual - proceso_actual['llegada'],
-                        'tiempoEspera': (tiempo_actual - proceso_actual['llegada']) - proceso_actual['duracion']
-                     })                        
+                        'nombre': current_process['nombre'],
+                        'finalizado': current_time,
+                        'tiempoGiro': current_time - current_process['llegada'],
+                        'tiempoEspera': (current_time - current_process['llegada']) - current_process['duracion']
+                     })                                                            
                           
             else:  
-                if self.procesos:  
+                if self.processes:  
                    
-                    tiempo_actual = self.procesos[0]['llegada']
+                    current_time = self.processes[0]['llegada']
+                    
         
         self.startEmulation.setEnabled(False)        
-        self.ganntList.addItem(processG)
+        
         sum_tg = sum(proceso['tiempoGiro'] for proceso in self.finishTimesList)
         sum_te = sum(proceso['tiempoEspera'] for proceso in self.finishTimesList)
 
-        self.promedio_tiempo_giro = sum_tg / len(self.finishTimesList)
-        self.promedio_tiempo_espera = sum_te / len(self.finishTimesList)
+        self.average_turning_time = sum_tg / len(self.finishTimesList)
+        self.average_waiting_time = sum_te / len(self.finishTimesList)
      
         self.ButtonAverages.setEnabled(True)
         self.ButtonLoadProcess.setEnabled(False)
-            
-        return resultado
-                
-    def cargar_procesos(self):        
+
+               
+    def load_processes(self):        
         
-        self.processTable.setRowCount(len(self.procesos)) 
-        self.processTable_2.setRowCount(len(self.procesosAux)) 
+        self.processTable.setRowCount(len(self.processes)) 
+        self.processTable_2.setRowCount(len(self.auxProcesses)) 
          
-        for i, proceso in enumerate(self.procesos):
-            self.processTable.setItem(i, 0, QTableWidgetItem(proceso['nombre']))
-            self.processTable.setItem(i, 1, QTableWidgetItem(str(proceso['llegada'])))
-            self.processTable.setItem(i, 2, QTableWidgetItem(str(proceso['duracion'])))
-            self.processTable.setItem(i, 3, QTableWidgetItem(str(proceso['prioridad'])))
-            self.processTable.setItem(i, 4, QTableWidgetItem(str(proceso['tiempo_restante'])))
+        for i, process in enumerate(self.processes):
+            self.processTable.setItem(i, 0, QTableWidgetItem(process['nombre']))
+            self.processTable.setItem(i, 1, QTableWidgetItem(str(process['llegada'])))
+            self.processTable.setItem(i, 2, QTableWidgetItem(str(process['duracion'])))
+            self.processTable.setItem(i, 3, QTableWidgetItem(str(process['prioridad'])))
+            self.processTable.setItem(i, 4, QTableWidgetItem(str(process['tiempo_restante'])))
             
-        for i, procesoAux in enumerate(self.procesosAux):
-            self.processTable_2.setItem(i, 0, QTableWidgetItem(procesoAux['nombre']))
-            self.processTable_2.setItem(i, 1, QTableWidgetItem(str(procesoAux['llegada'])))
-            self.processTable_2.setItem(i, 2, QTableWidgetItem(str(procesoAux['duracion'])))
-            self.processTable_2.setItem(i, 3, QTableWidgetItem(str(procesoAux['prioridad'])))
-            self.processTable_2.setItem(i, 4, QTableWidgetItem(str(procesoAux['tiempo_restante'])))
+        for i, auxProcess in enumerate(self.auxProcesses):
+            self.processTable_2.setItem(i, 0, QTableWidgetItem(auxProcess['nombre']))
+            self.processTable_2.setItem(i, 1, QTableWidgetItem(str(auxProcess['llegada'])))
+            self.processTable_2.setItem(i, 2, QTableWidgetItem(str(auxProcess['duracion'])))
+            self.processTable_2.setItem(i, 3, QTableWidgetItem(str(auxProcess['prioridad'])))
+            self.processTable_2.setItem(i, 4, QTableWidgetItem(str(auxProcess['tiempo_restante'])))
             
         self.startEmulation.setEnabled(True)
      
    
             
-    def generar_procesos(self):
+    def generate_processes(self):
                 
-        num_procesos = random.randint(1, 8)  
-        prioridades = random.sample(range(0, 8), num_procesos)  
-        self.procesos = []
-        self.procesosAux = []
+        num_processes = random.randint(1, 8)  
+        priorities = random.sample(range(0, 8), num_processes)  
+        self.processes = []
+        self.auxProcesses = []
         self.ButtonLoadProcess.setEnabled(True)
 
-        for i in range(num_procesos):
-            nombre = f'P{i+1}'
-            llegada = random.randint(0, 10)  #que sea almenos 1, 0 en arrive
-            duracion = random.randint(1, 12)
-            prioridad = prioridades[i]
-            tiempo_restante = duracion
+        for i in range(num_processes):
+            name = f'P{i+1}'
+            arrive = random.randint(0, 10)  #que sea almenos 1, 0 en arrive
+            duration = random.randint(1, 12)
+            priority = priorities[i]
+            resting_time = duration
 
-            proceso = {'nombre': nombre, 'llegada': llegada, 'duracion': duracion, 'prioridad': prioridad, 'tiempo_restante': tiempo_restante}
-            self.procesos.append(proceso)
-        self.procesosAux = copy.deepcopy(self.procesos)
+            proceso = {'nombre': name, 'llegada': arrive, 'duracion': duration, 'prioridad': priority, 'tiempo_restante': resting_time}
+            self.processes.append(proceso)
+        self.auxProcesses = copy.deepcopy(self.processes)
     
-    def limpiar_ventanas(self):
+    def clean_windows(self):
        self.listaListos.clear()
        self.ganntList.clear()
        self.processTable.setRowCount(0)
        self.processTable_2.setRowCount(0)
-       self.tiempo_actual = 0
+       self.current_time = 0
        
        self.ButtonAverages.setEnabled(False)
        
        
-    def mostrar_promedios(self):
+    def show_averages(self):
         boxOutPrint = QMessageBox()
         boxOutPrint.setIcon(QMessageBox.Information)
-        boxOutPrint.setText(f"Tiempo promedio de giro: {self.promedio_tiempo_giro:.2f}\nTiempo promedio de espera: {self.promedio_tiempo_espera:.2f}")
+        boxOutPrint.setText(f"Tiempo promedio de giro: {self.average_turning_time:.2f}\nTiempo promedio de espera: {self.average_waiting_time:.2f}")
         boxOutPrint.setWindowTitle("Promedios")
         boxOutPrint.exec_()
              
@@ -199,9 +185,9 @@ def main():
     
     app = QApplication(sys.argv)
     
-    ventana = ClaseUIDialog()    
-    ventana.setWindowTitle("Algoritmo de prioridad no Expulsivo")
-    ventana.show()    
+    window = ClaseUIDialog()    
+    window.setWindowTitle("Algoritmo de prioridad no Expulsivo")
+    window.show()    
     app.exec_()   
        
 if __name__ == "__main__":
