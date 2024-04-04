@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'test2.ui'
+# Form implementation generated from reading ui file 'priority_not_ex.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.10
 #
@@ -15,6 +15,8 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(1179, 883)
+        MainWindow.setStyleSheet("QWidget#centralwidget{\n"
+"background-color: qlineargradient(spread:pad, x1:0.092, y1:0.908909, x2:1, y2:0, stop:0.477273 rgba(26, 76, 107, 255), stop:0.943182 rgba(9, 32, 82, 255));}")
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.textBrowser_7 = QtWidgets.QTextBrowser(self.centralwidget)

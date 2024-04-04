@@ -2,7 +2,7 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox, QListWidgetI
 from PyQt5.QtCore import QTimer
 from PyQt5.QtGui import QBrush, QColor
 
-from test2 import Ui_MainWindow 
+from priority_not_ex import Ui_MainWindow 
 import sys
 import random
 import copy
