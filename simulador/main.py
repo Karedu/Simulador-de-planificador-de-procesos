@@ -378,6 +378,10 @@ def stop_simulation():
     stop = True
 
 def back_to_menu():
+    process_planner_1.hide()
+    process_planner_2.hide()
+    process_planner_5.hide()
+
     process_planner_3.hide()
     process_planner_6.hide()
     main.show()
