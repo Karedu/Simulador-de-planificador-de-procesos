@@ -41,14 +41,6 @@ def algoritmo2():
     process_planner_2.label_2.setText(main.algoritmo2.text())
     process_planner_2.show()
 
-def clock_cpu():
-    t = 0
-    process_planner.label_10.setText(str(t))
-    while t < 10:
-        time.sleep(1)
-        t += 1
-        process_planner.label_10.setText(str(t))
-
 def simulation_algoritmo3():
     # Simulacion con generacion de procesos aleatorios
     global stop
@@ -59,10 +51,13 @@ def simulation_algoritmo3():
     process_running = []
     list_terminated = []
     list_blocked = []
+    cpu_time = 0
     clock_time = 0
     n_process = num_process
     c_process = 0
     add_waiting_time = 0
+    add_running_time = 0
+    add_blocked_time = 0
     # Desabilitar el boton al iniciar la simulacion
     process_planner_3.play.setEnabled(False)
     process_planner_3.stop.setEnabled(True)
@@ -72,6 +67,10 @@ def simulation_algoritmo3():
     process_planner_3.label_12.setText("")
     process_planner_3.label_13.setText("")
     process_planner_3.label_10.setText(str(clock_time))
+    process_planner_3.uso_cpu.setText("Porcentaje de uso del procesador: ")
+    process_planner_3.t_espera.setText("Tiempo promedio de espera: ")
+    process_planner_3.t_bloqueo.setText("Tiempo promedio de bloqueo: ")
+    process_planner_3.t_ejecucion.setText("Tiempo promedio de ejecucion: ")
     process_planner_3.t_proc_comp.setText("Total de procesos completados: ")
     process_planner_3.t_total.setText("Tiempo total: ")
     in_cpu = 0
@@ -112,11 +111,12 @@ def simulation_algoritmo3():
             if list_blocked[0].block_time == 0:
                 #pasar proceso de bloqueado a lista de espera
                 list_blocked[0].blocked = False
-                list_blocked[0].give_ticket(ticket_randon(random.randint(1,3),list_ticket))
+                list_blocked[0].give_ticket(ticket_randon(list_blocked[0].num_ticket, list_ticket))
                 list_waiting.append(list_blocked[0])
                 list_blocked.remove(list_blocked[0])
             else:
                 list_blocked[0].block_time -= 1
+                add_blocked_time += 1
         # Acualizar lista de bloqueados
             process_planner_3.listWidget_3.clear()
             for process in list_blocked:
@@ -129,7 +129,8 @@ def simulation_algoritmo3():
             n_process -= 1
             process_planner_3.label_19.setText(str(c_process)+"/"+str(num_process))
             list_waiting.append(Process(str(c_process),random.randint(1,5),clock_time))
-            list_waiting[-1].give_ticket(ticket_randon(random.randint(1,3),list_ticket))
+            list_waiting[-1].num_ticket = random.randint(1,3)
+            list_waiting[-1].give_ticket(ticket_randon(list_waiting[-1].num_ticket, list_ticket))
             process_planner_3.listWidget.addItem(str(list_waiting[-1]))
         time.sleep(speed/2)       
         # Actualizar procesos en espera
@@ -155,6 +156,8 @@ def simulation_algoritmo3():
                 process_planner_3.listWidget_3.addItem(str(list_blocked[-1]))  
             else:
                 # Tiempo de procesamiento
+                cpu_time += 1  # tiempo de uso del CPU
+                process_planner_3.label_21.setText(str(cpu_time))
                 process_running[0].time_cpu += process_running[0].run()
                 process_planner_3.label_12.setText(str(process_running[0]))
         time.sleep(speed)
@@ -165,9 +168,13 @@ def simulation_algoritmo3():
     process_planner_3.label_10.setText(str(clock_time))
     for process in list_terminated:
         add_waiting_time += process.wait_time
+        add_running_time += process.burst_time
     # Mostrar resultados de la simulacion
     if len(list_terminated) != 0:
+        process_planner_3.uso_cpu.setText("Porcentaje de uso del procesador: "+str(round((cpu_time * 100)/clock_time))+"%")
         process_planner_3.t_espera.setText("Tiempo promedio de espera: "+str(round(add_waiting_time/len(list_terminated),2)))
+        process_planner_3.t_bloqueo.setText("Tiempo promedio de bloqueo: "+str(round(add_blocked_time/len(list_terminated),2)))
+        process_planner_3.t_ejecucion.setText("Tiempo promedio de ejecución: "+str(round(add_running_time/len(list_terminated),2)))    
     process_planner_3.t_proc_comp.setText("Total de procesos completados: "+str(len(list_terminated))+"/"+str(c_process))
     process_planner_3.t_total.setText("Tiempo total: "+str(clock_time))
     # Habilitar y reiniciar valores de la simulacion
@@ -181,8 +188,9 @@ def start_simulation3():
 
 def algoritmo3():
     main.hide()
-    process_planner_3.label_2.setText(main.algoritmo3.text())
+    process_planner_3.stop.setEnabled(False)
     process_planner_3.play.pressed.connect(start_simulation3)
+    process_planner_3.play.setCheckable(True)
     process_planner_3.show()
 
 def algoritmo4():
@@ -207,9 +215,12 @@ def simulation_algoritmo6():
     list_terminated = []
     list_blocked = [] 
     clock_time = 0
+    cpu_time = 0
     n_process = num_process
     c_process = 0
     add_waiting_time = 0    
+    add_blocked_time = 0
+    add_running_time = 0
     # Desabilitar el boton al iniciar la simulacion
     process_planner_6.play.setEnabled(False)
     process_planner_6.stop.setEnabled(True)
@@ -220,6 +231,10 @@ def simulation_algoritmo6():
     process_planner_6.label_12.setText("")
     process_planner_6.label_13.setText("")
     process_planner_6.label_10.setText(str(clock_time))
+    process_planner_6.uso_cpu.setText("Porcentaje de uso del procesador: ")
+    process_planner_6.t_espera.setText("Tiempo promedio de espera: ")
+    process_planner_6.t_bloqueo.setText("Tiempo promedio de bloqueo: ")
+    process_planner_6.t_ejecucion.setText("Tiempo promedio de ejecucion: ")
     process_planner_6.t_proc_comp.setText("Total de procesos completados: ")
     process_planner_6.t_total.setText("Tiempo total: ")
 
@@ -275,6 +290,7 @@ def simulation_algoritmo6():
                 list_blocked.remove(list_blocked[0])
             else:
                 list_blocked[0].block_time -= 1
+                add_blocked_time += 1
         # Acualizar lista de bloqueados
             process_planner_6.listWidget_3.clear()
             for process in list_blocked:
@@ -309,6 +325,8 @@ def simulation_algoritmo6():
                 process_planner_6.listWidget_3.addItem(str(list_blocked[-1]))  
             else:
                 # Tiempo de procesamiento
+                cpu_time += 1  # tiempo de uso del CPU
+                process_planner_6.label_21.setText(str(cpu_time))
                 process_running[0].time_cpu += process_running[0].run()
                 process_planner_6.label_12.setText(str(process_running[0]))
         process_planner_6.listWidget.clear()
@@ -322,9 +340,13 @@ def simulation_algoritmo6():
     process_planner_6.label_10.setText(str(clock_time))
     for process in list_terminated:
         add_waiting_time += process.wait_time
+        add_running_time += process.burst_time
     # Mostrar resultados de la simulacion
     if len(list_terminated) != 0:
+        process_planner_6.uso_cpu.setText("Porcentaje de uso del procesador: "+str(round((cpu_time * 100)/clock_time))+"%")
         process_planner_6.t_espera.setText("Tiempo promedio de espera: "+str(round(add_waiting_time/len(list_terminated),2)))
+        process_planner_6.t_bloqueo.setText("Tiempo promedio de bloqueo: "+str(round(add_blocked_time/len(list_terminated),2)))
+        process_planner_6.t_ejecucion.setText("Tiempo promedio de ejecución: "+str(round(add_running_time/len(list_terminated),2)))
     process_planner_6.t_proc_comp.setText("Total de procesos completados: "+str(len(list_terminated))+"/"+str(c_process))
     process_planner_6.t_total.setText("Tiempo total: "+str(clock_time))
     # Habilitar y reiniciar valores de la simulación
@@ -336,30 +358,24 @@ def start_simulation6():
     worker = Worker(simulation_algoritmo6)
     threadpool.start(worker)
     
+def algoritmo6():
+    main.hide()
+    process_planner_6.stop.setEnabled(False)
+    process_planner_6.play.pressed.connect(start_simulation6)
+    process_planner_6.play.setCheckable(True)
+    process_planner_6.show()
+
 def number_process(num):
     global num_process
     num_process = num
-    print(str(num_process))
 
 def speed_simulation(sp):
     global speed
     speed = sp
-    print(str(speed))
 
 def stop_simulation():
-    print("Simulación detenida")
     global stop
     stop = True
-    #process_planner_6.stop.setCheckable(False)
-
-def algoritmo6():
-    main.hide()
-    process_planner_6.stop.setEnabled(False)
-    process_planner_6.label_2.setText(main.algoritmo6.text())
-    process_planner_6.play.pressed.connect(start_simulation6)
-    process_planner_6.play.setCheckable(True)    
-    # global stop = True
-    process_planner_6.show()
 
 def back_to_menu():
     process_planner_3.hide()
@@ -374,7 +390,6 @@ main.algoritmo4.clicked.connect(algoritmo4)
 main.algoritmo5.clicked.connect(algoritmo5)
 main.algoritmo6.clicked.connect(algoritmo6)
 main.salir.clicked.connect(quit)
-# process_planner.regresar.clicked.connect(back_to_menu)
 process_planner_1.regresar.clicked.connect(back_to_menu)
 process_planner_2.regresar.clicked.connect(back_to_menu)
 process_planner_3.regresar.clicked.connect(back_to_menu)

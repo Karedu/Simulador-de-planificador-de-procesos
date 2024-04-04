@@ -11,6 +11,7 @@ class Process:
     self.time_blocked = 0 # Tiempo total bloqueado
     self.lock_number = 0
     self.completion_time = 0  # tiempo de finalización
+    self.num_ticket = 0
     self.ticket = []
     self.waiting = True
     self.running = False
@@ -34,7 +35,7 @@ class Process:
     if not(self.blocked):
       state = "Proceso: "+self.name+"\n-T. Procesamiento: "+str(self.time_cpu)+"/"+str(self.burst_time)+"\n-T. Llegada: "+str(self.arrival_time)+"\n-T. Espera: "+str(self.wait_time)+"\n-T.T. Bloquedo: "+str(self.time_blocked)+"/#Blq: "+str(self.lock_number)
       if len(self.ticket) != 0:
-        state = state + ("\n-Ticket: "+str(self.ticket))
+        state = state + ("\n-#Ticket: "+str(self.num_ticket)+": "+str(self.ticket))
       if self.terminated:
         state = state + ("\n-T. Finalización: "+str(self.completion_time))
     else:
@@ -43,6 +44,7 @@ class Process:
 
 def ticket_randon(number_ticket, list_ticket):
   number = []
+ 
   while number_ticket > 0:
     ticket = random.randint(1,len(list_ticket)+1)
 

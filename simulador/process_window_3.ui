@@ -62,11 +62,11 @@ color: white;</string>
     </property>
     <property name="styleSheet">
      <string notr="true">font: 600 18pt &quot;Segoe UI Semibold&quot;;
-color: white;
+color: rgb(255, 85, 0);
 text-align: center;</string>
     </property>
     <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;Algoritmo&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt; font-style:italic;&quot;&gt;Selección aleatoria&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
    <widget class="QWidget" name="widget" native="true">
@@ -266,7 +266,7 @@ color: white;
 text-align: center;</string>
        </property>
        <property name="text">
-        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;right&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;Ticket ganador:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;right&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;Último&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;right&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;Ticket ganador:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
       </widget>
      </item>
@@ -345,9 +345,9 @@ font: 18pt &quot;Segoe UI&quot;;</string>
    <widget class="QLabel" name="label_3">
     <property name="geometry">
      <rect>
-      <x>270</x>
+      <x>10</x>
       <y>150</y>
-      <width>201</width>
+      <width>731</width>
       <height>41</height>
      </rect>
     </property>
@@ -356,11 +356,11 @@ font: 18pt &quot;Segoe UI&quot;;</string>
     </property>
     <property name="styleSheet">
      <string notr="true">font: 600 18pt &quot;Segoe UI Semibold&quot;;
-color: white;
+color: rgb(255, 85, 0);
 text-align: center;</string>
     </property>
     <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;Simulador&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt; font-style:italic;&quot;&gt;Simulador&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
    <widget class="QFrame" name="frame_7">
@@ -382,7 +382,7 @@ border-radius: 15px;</string>
     <property name="frameShadow">
      <enum>QFrame::Raised</enum>
     </property>
-    <widget class="QPushButton" name="pushButton">
+    <widget class="QPushButton" name="t_ejecucion">
      <property name="geometry">
       <rect>
        <x>310</x>
@@ -422,7 +422,7 @@ background-color: rgba(170, 0, 0, 180);</string>
       <string>Tiempo promedio de espera</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="regresar_2">
+    <widget class="QPushButton" name="uso_cpu">
      <property name="geometry">
       <rect>
        <x>9</x>
@@ -482,7 +482,7 @@ background-color: rgba(170, 0, 0, 180);</string>
       <string>Tiempo total</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="regresar_4">
+    <widget class="QPushButton" name="t_bloqueo">
      <property name="geometry">
       <rect>
        <x>9</x>
@@ -718,6 +718,56 @@ padding: 2px;
 </string>
     </property>
    </widget>
+   <widget class="QFrame" name="frame_11">
+    <property name="geometry">
+     <rect>
+      <x>560</x>
+      <y>460</y>
+      <width>171</width>
+      <height>83</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout_6">
+     <item>
+      <widget class="QLabel" name="label_20">
+       <property name="styleSheet">
+        <string notr="true">font: 600 12pt &quot;Segoe UI Semibold&quot;;
+color: white;
+text-align: center;</string>
+       </property>
+       <property name="text">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;right&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;Tiempo de uso &lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;right&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;CPU&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_21">
+       <property name="toolTip">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;right&quot;&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgba(59, 3, 127, 150);
+border-radius: 15px;
+padding: 2px;
+color: white;
+font: 18pt &quot;Segoe UI&quot;;</string>
+       </property>
+       <property name="text">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -725,7 +775,7 @@ padding: 2px;
      <x>0</x>
      <y>0</y>
      <width>750</width>
-     <height>22</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>
