@@ -11,11 +11,18 @@ from utils import Utils
 
 # Inicializo un treathpool para administrar y ejecutar todos los procesos que se van a ejecutar
 threadpool = QThreadPool()
+stop = False
 
 # Funcion que permitira iniciar la simulacion
 def startFCFS(windows):
         worker = Worker(windows.fcfs)
         threadpool.start(worker)
+
+# Funcion que permitira detner la simulacion
+def stopFCFS(window):
+    window.mutex.lock()
+    window.stop_simulation()
+    window.mutex.unlock()
 
 # Clase principal que nos permite iniciar la simulacion del algoritmo FCFS
 class MainWindowFCFS(Utils):
@@ -25,10 +32,19 @@ class MainWindowFCFS(Utils):
         super().__init__()
         self.mutex = QMutex()
         self.wigets = process_planner_1
+        self.pause_flag = False
+
+        self.completed_processes = []
+        self.bloqued_processes = []
+        self.clock_cycle = 0
+        self.prepared_queue = Queue()
+    # Metodo para pausar la simulacion
+    def stop_simulation(self):
+        self.pause_flag = True
 
     # Metodo del algoritmo
     def fcfs(self):
-
+        self.pause_flag = False
         # Obtenemos el valor ingresado por el usuario en el wiget para determinar cuantas operaciones queremos generar
         quantity_process = self.wigets.cantidad.value()
         if quantity_process == 0:
@@ -62,10 +78,30 @@ class MainWindowFCFS(Utils):
 
         # Empiezan validaciones y ciclos
         while True:
-
+            if self.pause_flag == True:
+                self.show_details(self.mutex,self.wigets,"Finalizo simulacion")
+                self.activate_button(self.wigets)
+                if not self.completed_processes:
+                    self.wigets.listaPromedios.addItem(f"Cantidad de procesos completados:  0")
+                    self.wigets.listaPromedios.addItem(f"Tiempo promedio en CPU:  0")
+                    self.wigets.listaPromedios.addItem(f"Tiempo promedio de llegada:  0")
+                    self.wigets.listaPromedios.addItem(f"Tiempo promedio de servicio:  0")
+                else:
+                    self.calculate_promedy(self.wigets,self.completed_processes)
+                return
             # Verificamos si hay procesos en cola para ser ejecutados por el CPU
             if self.prepared_queue.empty():
-
+                if self.pause_flag == True:
+                    self.show_details(self.mutex,self.wigets,"Finalizo simulacion")
+                    self.activate_button(self.wigets)
+                    if not self.completed_processes:
+                        self.wigets.listaPromedios.addItem(f"Cantidad de procesos completados:  0")
+                        self.wigets.listaPromedios.addItem(f"Tiempo promedio en CPU:  0")
+                        self.wigets.listaPromedios.addItem(f"Tiempo promedio de llegada:  0")
+                        self.wigets.listaPromedios.addItem(f"Tiempo promedio de servicio:  0")
+                    else:
+                        self.calculate_promedy(self.wigets,self.completed_processes)
+                    return
                 # SINO continuamos ciclo
                 self.remove_cpu(self.mutex,self.wigets)
                 self.show_details(self.mutex,self.wigets,f"No han llegado mas tareas...")
@@ -118,6 +154,18 @@ class MainWindowFCFS(Utils):
 
             # Segundo ciclo para simular el avance de un ciclo de reloj
             while True:
+                print("stop, ",stop)
+                if self.pause_flag == True:
+                    self.show_details(self.mutex,self.wigets,"Finalizo simulacion")
+                    self.activate_button(self.wigets)
+                    if not self.completed_processes:
+                        self.wigets.listaPromedios.addItem(f"Cantidad de procesos completados:  0")
+                        self.wigets.listaPromedios.addItem(f"Tiempo promedio en CPU:  0")
+                        self.wigets.listaPromedios.addItem(f"Tiempo promedio de llegada:  0")
+                        self.wigets.listaPromedios.addItem(f"Tiempo promedio de servicio:  0")
+                    else:
+                        self.calculate_promedy(self.wigets,self.completed_processes)
+                    return
                 
                 self.clock_cycle = self.clock_cycle + 1
 
@@ -223,9 +271,5 @@ class MainWindowFCFS(Utils):
                         return self.completed_processes
                     
                     break
-
-
-                time.sleep(1)
             print("")
- 
         return   

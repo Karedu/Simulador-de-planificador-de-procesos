@@ -1,14 +1,14 @@
 import sys
 import time
 import random
-from PyQt5 import uic
-from PyQt5.QtWidgets import QApplication, QMainWindow 
+from PyQt6 import uic
+from PyQt6.QtWidgets import QApplication, QMainWindow 
 from QRunnable import Worker
-from PyQt5.QtCore import *
+from PyQt6.QtCore import *
 from Procesos import Process, ticket_randon, win_process, del_ticket_process
-from robRobin import MainWindowRobin, startRobRobin
-from FCFS import MainWindowFCFS, startFCFS
-from SJF import MainWindowSJF, startSJF
+from robRobin import MainWindowRobin, startRobRobin , stopRobRobin
+from FCFS import MainWindowFCFS, startFCFS , stopFCFS
+from SJF import MainWindowSJF, startSJF , stopSJF
 from ClaseUIForm import ClaseUIDialog
 from ClaseUIForm2 import ClaseUIDialog2
 
@@ -38,6 +38,7 @@ def algoritmo1():
     main.hide()
     window = MainWindowFCFS(process_planner_1)
     process_planner_1.play.clicked.connect(lambda: startFCFS(window))
+    process_planner_1.stop.clicked.connect(lambda: stopFCFS(window))
     process_planner_1.label_2.setText(main.algoritmo1.text())
     process_planner_1.show()
 
@@ -45,6 +46,7 @@ def algoritmo2():
     main.hide()
     window = MainWindowSJF(process_planner_2)
     process_planner_2.play.clicked.connect(lambda: startSJF(window))
+    process_planner_2.stop.clicked.connect(lambda: stopSJF(window))
     process_planner_2.label_2.setText(main.algoritmo2.text())
     process_planner_2.show()
 
@@ -216,9 +218,9 @@ main.algoritmo7.clicked.connect(algoritmo7)
 
 def algoritmo5():
     main.hide()
-    quantum = 4
     window = MainWindowRobin(process_planner_5)
     process_planner_5.play.clicked.connect(lambda: startRobRobin(window))
+    process_planner_2.stop.clicked.connect(lambda: stopSJF(window))
     process_planner_5.label_2.setText(main.algoritmo5.text())
     process_planner_5.show()
 

@@ -1,6 +1,6 @@
-from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox, QListWidgetItem, QTableWidgetItem
-from PyQt5.QtCore import QTimer
-from PyQt5.QtGui import QBrush, QColor
+from PyQt6.QtWidgets import QApplication, QMainWindow, QMessageBox, QListWidgetItem, QTableWidgetItem
+from PyQt6.QtCore import QTimer
+from PyQt6.QtGui import QBrush, QColor
 
 from priority_not_ex import Ui_MainWindow 
 import sys

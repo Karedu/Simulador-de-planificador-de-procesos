@@ -7,6 +7,7 @@ import random
 
 class Utils:
 
+
     # Metodo para generar procesos con valores aleatorios
     @staticmethod
     def generar_valores_aleatorios(quantity):
@@ -31,6 +32,7 @@ class Utils:
         average_waiting_time = 0
         average_service_time = 0
         average_CPU_time = 0
+
         for data in processes:
             CPU_time = data["total_time"] - data["arrival_time"]
             waiting_time = CPU_time - data["burst_time"]

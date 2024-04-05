@@ -17,6 +17,11 @@ def startRobRobin(windows):
         worker = Worker(windows.simulate_round_robin)
         threadpool.start(worker)
 
+# Funcion que permitira detner la simulacion
+def stopRobRobin(window):
+    window.mutex.lock()
+    window.stop_simulation()
+    window.mutex.unlock()
 # Clase principal que nos permite iniciar la simulacion del algoritmo RobRobin
 class MainWindowRobin(Utils):
 
@@ -26,6 +31,11 @@ class MainWindowRobin(Utils):
         self.mutex = QMutex()
         self.wigets = process_planner_5
         self.quantum = 0
+        self.pause_flag = False
+
+    # Metodo para pausar la simulacion
+    def stop_simulation(self):
+        self.pause_flag = True
 
     # Metodo del algoritmo
     def simulate_round_robin(self):
@@ -36,7 +46,7 @@ class MainWindowRobin(Utils):
         if quantum == 0 or quantity_process == 0:
             return
         self.quantum = quantum
-
+        self.pause_flag = False
         # Reiniciamos todas la vistas
         self.disable_button(self.wigets)
         self.clear_completes_process(self.mutex,self.wigets)
@@ -66,10 +76,32 @@ class MainWindowRobin(Utils):
 
         # Empiezan validaciones y ciclos
         while True:
-            
+            if self.pause_flag == True:
+                self.show_details(self.mutex,self.wigets,"Finalizo simulacion")
+                self.activate_button(self.wigets)
+                if not self.completed_processes:
+                    self.wigets.listaPromedios.addItem(f"Cantidad de procesos completados:  0")
+                    self.wigets.listaPromedios.addItem(f"Tiempo promedio en CPU:  0")
+                    self.wigets.listaPromedios.addItem(f"Tiempo promedio de llegada:  0")
+                    self.wigets.listaPromedios.addItem(f"Tiempo promedio de servicio:  0")
+                else:
+                    self.calculate_promedy(self.wigets,self.completed_processes)
+                return
             # Verificamos si hay procesos en cola para ser ejecutados por el CPU
             if self.prepared_queue.empty():
 
+                if self.pause_flag == True:
+                    self.show_details(self.mutex,self.wigets,"Finalizo simulacion")
+                    self.activate_button(self.wigets)
+                    if not self.completed_processes:
+                        self.wigets.listaPromedios.addItem(f"Cantidad de procesos completados:  0")
+                        self.wigets.listaPromedios.addItem(f"Tiempo promedio en CPU:  0")
+                        self.wigets.listaPromedios.addItem(f"Tiempo promedio de llegada:  0")
+                        self.wigets.listaPromedios.addItem(f"Tiempo promedio de servicio:  0")
+                    else:
+                        self.calculate_promedy(self.wigets,self.completed_processes)
+                    return
+            
                 # SINO continuamos ciclo
                 self.remove_cpu(self.mutex,self.wigets)
                 self.show_details(self.mutex,self.wigets,f"No han llegado mas tareas...")
@@ -122,7 +154,19 @@ class MainWindowRobin(Utils):
             
             # Empiezan a correr los ciclos, con la condicion de que un ciclo solo podra ejecutar una cantidad de ciclos igual al quantum asignado
             while task_cycles <= self.quantum:
-            
+                
+                if self.pause_flag == True:
+                    self.show_details(self.mutex,self.wigets,"Finalizo simulacion")
+                    self.activate_button(self.wigets)
+                    if not self.completed_processes:
+                        self.wigets.listaPromedios.addItem(f"Cantidad de procesos completados:  0")
+                        self.wigets.listaPromedios.addItem(f"Tiempo promedio en CPU:  0")
+                        self.wigets.listaPromedios.addItem(f"Tiempo promedio de llegada:  0")
+                        self.wigets.listaPromedios.addItem(f"Tiempo promedio de servicio:  0")
+                    else:
+                        self.calculate_promedy(self.wigets,self.completed_processes)
+                    return
+                
                 task_cycles = task_cycles + 1
                 self.clock_cycle = self.clock_cycle + 1
 

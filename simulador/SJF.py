@@ -17,6 +17,12 @@ def startSJF(windows):
         worker = Worker(windows.sjf)
         threadpool.start(worker)
 
+# Funcion que permitira detner la simulacion
+def stopSJF(window):
+    window.mutex.lock()
+    window.stop_simulation()
+    window.mutex.unlock()
+
 # Clase principal que nos permite iniciar la simulacion del algoritmo SJF
 class MainWindowSJF(Utils):
 
@@ -26,6 +32,9 @@ class MainWindowSJF(Utils):
         self.mutex = QMutex()
         self.wigets = process_planner_2
 
+    # Metodo para pausar la simulacion
+    def stop_simulation(self):
+        self.pause_flag = True
     # Metodo del algoritmo
     def sjf(self):
 
@@ -67,9 +76,30 @@ class MainWindowSJF(Utils):
         # Empiezan validaciones y ciclos
         while True:
 
+            if self.pause_flag == True:
+                self.show_details(self.mutex,self.wigets,"Finalizo simulacion")
+                self.activate_button(self.wigets)
+                if not self.completed_processes:
+                    self.wigets.listaPromedios.addItem(f"Cantidad de procesos completados:  0")
+                    self.wigets.listaPromedios.addItem(f"Tiempo promedio en CPU:  0")
+                    self.wigets.listaPromedios.addItem(f"Tiempo promedio de llegada:  0")
+                    self.wigets.listaPromedios.addItem(f"Tiempo promedio de servicio:  0")
+                else:
+                    self.calculate_promedy(self.wigets,self.completed_processes)
+                return
             # Verificamos si hay procesos en cola para ser ejecutados por el CPU
             if not self.processes_queue:
-
+                if self.pause_flag == True:
+                    self.show_details(self.mutex,self.wigets,"Finalizo simulacion")
+                    self.activate_button(self.wigets)
+                    if not self.completed_processes:
+                        self.wigets.listaPromedios.addItem(f"Cantidad de procesos completados:  0")
+                        self.wigets.listaPromedios.addItem(f"Tiempo promedio en CPU:  0")
+                        self.wigets.listaPromedios.addItem(f"Tiempo promedio de llegada:  0")
+                        self.wigets.listaPromedios.addItem(f"Tiempo promedio de servicio:  0")
+                    else:
+                        self.calculate_promedy(self.wigets,self.completed_processes)
+                    return
                 # SINO continuamos ciclo
                 self.remove_cpu(self.mutex,self.wigets)
                 self.show_details(self.mutex,self.wigets,f"No han llegado mas tareas...")
@@ -129,7 +159,17 @@ class MainWindowSJF(Utils):
 
             # Segundo ciclo para simular el avance de un ciclo de reloj
             while True:
-                
+                if self.pause_flag == True:
+                    self.show_details(self.mutex,self.wigets,"Finalizo simulacion")
+                    self.activate_button(self.wigets)
+                    if not self.completed_processes:
+                        self.wigets.listaPromedios.addItem(f"Cantidad de procesos completados:  0")
+                        self.wigets.listaPromedios.addItem(f"Tiempo promedio en CPU:  0")
+                        self.wigets.listaPromedios.addItem(f"Tiempo promedio de llegada:  0")
+                        self.wigets.listaPromedios.addItem(f"Tiempo promedio de servicio:  0")
+                    else:
+                        self.calculate_promedy(self.wigets,self.completed_processes)
+                    return
                 self.rewrite_list(self.mutex,self.wigets,self.processes_queue)
                 self.clock_cycle = self.clock_cycle + 1
                 
