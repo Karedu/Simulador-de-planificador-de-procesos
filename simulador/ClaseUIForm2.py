@@ -175,20 +175,21 @@ class ClaseUIDialog2(QMainWindow, Ui_MainWindow):
        
     def show_averages(self):
         boxOutPrint = QMessageBox()
-        boxOutPrint.setIcon(QMessageBox.Information)
+        boxOutPrint.setIcon(QMessageBox.Icon.Information)
         boxOutPrint.setText(f"Tiempo promedio de giro: {self.average_turning_time:.2f}\nTiempo promedio de espera: {self.average_waiting_time:.2f}")
         boxOutPrint.setWindowTitle("Promedios")
-        boxOutPrint.exec_()
+        boxOutPrint.exec()
+
              
 
-# def main():
+def main():
     
-#     app = QApplication(sys.argv)
+    app = QApplication(sys.argv)
     
-#     window = ClaseUIDialog2()    
-#     window.setWindowTitle("Algoritmo de prioridad no Expulsivo")
-#     window.show()    
-#     app.exec_()   
+    window = ClaseUIDialog2()    
+    window.setWindowTitle("Algoritmo de prioridad no Expulsivo")
+    window.show()    
+    app.exec()   
        
-# if __name__ == "__main__":
-#     main()
+if __name__ == "__main__":
+    main()

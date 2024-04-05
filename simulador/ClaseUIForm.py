@@ -17,7 +17,7 @@ class ClaseUIDialog(QMainWindow, Ui_MainWindow):
         self.ButtonLoadProcess.clicked.connect(self.cargar_procesos)
         self.Button1.hide()
         self.ButtonGenerate.clicked.connect(self.generate_processes)
-        self.clearButton.clicked.connect(self.show_averages)        
+        self.clearButton.clicked.connect(self.clear_windows)        
         
         self.previous_process = None        
         self.startProcess = False
@@ -81,6 +81,7 @@ class ClaseUIDialog(QMainWindow, Ui_MainWindow):
     def cargar_procesos(self):
         
         self.Button1.show()
+        self.Button1.setEnabled(True)
         self.processTable.setRowCount(len(self.processes)) 
         self.processTable_2.setRowCount(len(self.auxiliary_processes)) 
          
@@ -118,7 +119,7 @@ class ClaseUIDialog(QMainWindow, Ui_MainWindow):
         self.ButtonLoadProcess.setEnabled(True)
         
     
-    def show_averages(self):
+    def clear_windows(self):
         self.listaListos.clear()
         self.ganntList.clear()
         self.processTable.setRowCount(0)
@@ -136,7 +137,7 @@ class ClaseUIDialog(QMainWindow, Ui_MainWindow):
 #     ventana = ClaseUIDialog()    
 #     ventana.setWindowTitle("Algoritmo de prioridad Expulsivo")
 #     ventana.show()    
-#     app.exec_()
+#     app.exec()
     
 # if __name__ == "__main__":
 #     main()
