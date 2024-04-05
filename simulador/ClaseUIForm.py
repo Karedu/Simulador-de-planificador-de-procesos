@@ -1,6 +1,6 @@
-from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox, QListWidgetItem, QTableWidgetItem
-from PyQt5.QtCore import QTimer
-from PyQt5.QtGui import QBrush, QColor
+from PyQt6.QtWidgets import QApplication, QMainWindow, QMessageBox, QListWidgetItem, QTableWidgetItem
+from PyQt6.QtCore import QTimer
+from PyQt6.QtGui import QBrush, QColor
 
 from priority_ex import Ui_MainWindow 
 import sys
@@ -77,9 +77,6 @@ class ClaseUIDialog(QMainWindow, Ui_MainWindow):
             processG.setBackground(QBrush(QColor('yellow')))                    
             self.ganntList.addItem(processG)   
             self.timer.stop()
-        
-       
-                    
             
     def cargar_procesos(self):
         
