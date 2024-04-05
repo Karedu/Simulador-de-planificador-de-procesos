@@ -1,10 +1,10 @@
 import sys
 import time
 import random
-from PyQt5 import uic
-from PyQt5.QtWidgets import QApplication, QMainWindow 
+from PyQt6 import uic
+from PyQt6.QtWidgets import QApplication, QMainWindow 
 from QRunnable import Worker
-from PyQt5.QtCore import *
+from PyQt6.QtCore import *
 from Procesos import Process, ticket_randon, win_process, del_ticket_process
 from robRobin import MainWindowRobin, startRobRobin
 from FCFS import MainWindowFCFS, startFCFS

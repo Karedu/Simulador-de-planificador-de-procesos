@@ -1,6 +1,6 @@
-from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox, QListWidgetItem, QTableWidgetItem
-from PyQt5.QtCore import QTimer
-from PyQt5.QtGui import QBrush, QColor
+from PyQt6.QtWidgets import QApplication, QMainWindow, QMessageBox, QListWidgetItem, QTableWidgetItem
+from PyQt6.QtCore import QTimer
+from PyQt6.QtGui import QBrush, QColor
 
 from priority_not_ex import Ui_MainWindow 
 import sys
@@ -181,14 +181,14 @@ class ClaseUIDialog2(QMainWindow, Ui_MainWindow):
         boxOutPrint.exec_()
              
 
-# def main():
+def main():
     
-#     app = QApplication(sys.argv)
+    app = QApplication(sys.argv)
     
-#     window = ClaseUIDialog2()    
-#     window.setWindowTitle("Algoritmo de prioridad no Expulsivo")
-#     window.show()    
-#     app.exec_()   
+    window = ClaseUIDialog2()    
+    window.setWindowTitle("Algoritmo de prioridad no Expulsivo")
+    window.show()    
+    app.exec()   
        
-# if __name__ == "__main__":
-#     main()
+if __name__ == "__main__":
+    main()
