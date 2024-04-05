@@ -17,8 +17,6 @@ threadpool = QThreadPool()
 app = QApplication(sys.argv)
 window_pr1 = None
 
-
-
 # cargar los archivos .ui
 main = uic.loadUi("main_window.ui")
 process_planner_1 = uic.loadUi("process_window_1.ui")
@@ -33,19 +31,16 @@ num_process = 1
 speed = 1
 stop = False
 
-
 def algoritmo1():
     main.hide()
     window = MainWindowFCFS(process_planner_1)
     process_planner_1.play.clicked.connect(lambda: startFCFS(window))
-    process_planner_1.label_2.setText(main.algoritmo1.text())
     process_planner_1.show()
 
 def algoritmo2():
     main.hide()
     window = MainWindowSJF(process_planner_2)
     process_planner_2.play.clicked.connect(lambda: startSJF(window))
-    process_planner_2.label_2.setText(main.algoritmo2.text())
     process_planner_2.show()
 
 def simulation_algoritmo3():
@@ -148,7 +143,7 @@ def simulation_algoritmo3():
         # 4. Ejecuto proceso en CPU 
         if len(process_running) != 0:
             # Bloquear proceso en cpu en caso de cumplirse lo siguiente
-            if random.randint(1,5) == 1:
+            if random.randint(1,8) == 1:
                 print("PROCESO BLOQUEADO")
                 process_running[0].running = False
                 process_running[0].ticket.clear()
@@ -219,7 +214,6 @@ def algoritmo5():
     quantum = 4
     window = MainWindowRobin(process_planner_5)
     process_planner_5.play.clicked.connect(lambda: startRobRobin(window))
-    process_planner_5.label_2.setText(main.algoritmo5.text())
     process_planner_5.show()
 
 def algoritmo7():
