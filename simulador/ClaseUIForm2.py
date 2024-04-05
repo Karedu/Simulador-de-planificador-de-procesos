@@ -7,10 +7,10 @@ import sys
 import random
 import copy
 
-class ClaseUIDialog(QMainWindow, Ui_MainWindow):
+class ClaseUIDialog2(QMainWindow, Ui_MainWindow):
     
     def __init__(self, parent=None):        
-        super(ClaseUIDialog, self).__init__(parent)
+        super(ClaseUIDialog2, self).__init__(parent)
         
         self.setupUi(self)       
         self.startEmulation.clicked.connect(self.non_preemptive_priority_algorithm)
@@ -181,14 +181,14 @@ class ClaseUIDialog(QMainWindow, Ui_MainWindow):
         boxOutPrint.exec_()
              
 
-def main():
+# def main():
     
-    app = QApplication(sys.argv)
+#     app = QApplication(sys.argv)
     
-    window = ClaseUIDialog()    
-    window.setWindowTitle("Algoritmo de prioridad no Expulsivo")
-    window.show()    
-    app.exec_()   
+#     window = ClaseUIDialog2()    
+#     window.setWindowTitle("Algoritmo de prioridad no Expulsivo")
+#     window.show()    
+#     app.exec_()   
        
-if __name__ == "__main__":
-    main()
+# if __name__ == "__main__":
+#     main()

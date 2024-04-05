@@ -1,25 +1,29 @@
 import sys
 import time
 import random
-from PyQt6 import uic
-from PyQt6.QtWidgets import QApplication
+from PyQt5 import uic
+from PyQt5.QtWidgets import QApplication, QMainWindow 
 from QRunnable import Worker
-from PyQt6.QtCore import *
+from PyQt5.QtCore import *
 from Procesos import Process, ticket_randon, win_process, del_ticket_process
 from robRobin import MainWindowRobin, startRobRobin
 from FCFS import MainWindowFCFS, startFCFS
 from SJF import MainWindowSJF, startSJF
+from ClaseUIForm import ClaseUIDialog
+from ClaseUIForm2 import ClaseUIDialog2
 
 threadpool = QThreadPool()
 # iniciar la aplicacion
 app = QApplication(sys.argv)
+window_pr1 = None
+
+
 
 # cargar los archivos .ui
 main = uic.loadUi("main_window.ui")
 process_planner_1 = uic.loadUi("process_window_1.ui")
 process_planner_2 = uic.loadUi("process_window_2.ui")
 process_planner_3 = uic.loadUi("process_window_3.ui")
-process_planner_4 = uic.loadUi("priority_ex.ui")
 process_planner_5 = uic.loadUi("process_window_5.ui")
 process_planner_6 = uic.loadUi("process_window_6.ui")
 process_planner_7 = uic.loadUi("priority_not_ex.ui")
@@ -28,6 +32,7 @@ process_planner_7 = uic.loadUi("priority_not_ex.ui")
 num_process = 1
 speed = 1
 stop = False
+
 
 def algoritmo1():
     main.hide()
@@ -196,9 +201,18 @@ def algoritmo3():
     process_planner_3.show()
 
 def algoritmo4():
-    main.hide()
-    process_planner_4.resize(900, 862)
-    process_planner_4.show()
+    global window_pr1    
+    window_pr1 = ClaseUIDialog()    
+    window_pr1.show()
+
+def algoritmo7():
+    global window_pr2    
+    window_pr2 = ClaseUIDialog2()    
+    window_pr2.show()
+    
+        
+main.algoritmo4.clicked.connect(algoritmo4)
+main.algoritmo7.clicked.connect(algoritmo7)
 
 def algoritmo5():
     main.hide()
@@ -210,7 +224,7 @@ def algoritmo5():
 
 def algoritmo7():
     main.hide()    
-    process_planner_4.show()
+    
 
 def simulation_algoritmo6():
     global stop
@@ -396,10 +410,10 @@ def back_to_menu():
 main.algoritmo1.clicked.connect(algoritmo1)
 main.algoritmo2.clicked.connect(algoritmo2)
 main.algoritmo3.clicked.connect(algoritmo3)
-main.algoritmo4.clicked.connect(algoritmo4)
+
 main.algoritmo5.clicked.connect(algoritmo5)
 main.algoritmo6.clicked.connect(algoritmo6)
-main.algoritmo4.clicked.connect(algoritmo7)
+
 main.salir.clicked.connect(quit)
 process_planner_1.regresar.clicked.connect(back_to_menu)
 process_planner_2.regresar.clicked.connect(back_to_menu)
@@ -417,5 +431,6 @@ process_planner_2.salir.clicked.connect(quit)
 process_planner_3.salir.clicked.connect(quit)
 process_planner_5.salir.clicked.connect(quit)
 process_planner_6.salir.clicked.connect(quit)
+
 main.show()
 sys.exit(app.exec())

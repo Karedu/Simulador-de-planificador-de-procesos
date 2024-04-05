@@ -1,6 +1,6 @@
-from PyQt6.QtWidgets import QApplication, QMainWindow, QMessageBox, QListWidgetItem, QTableWidgetItem
-from PyQt6.QtCore import QTimer
-from PyQt6.QtGui import QBrush, QColor
+from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox, QListWidgetItem, QTableWidgetItem
+from PyQt5.QtCore import QTimer
+from PyQt5.QtGui import QBrush, QColor
 
 from priority_ex import Ui_MainWindow 
 import sys
@@ -129,14 +129,14 @@ class ClaseUIDialog(QMainWindow, Ui_MainWindow):
         self.ButtonLoadProcess.setEnabled(False)
         
     
-def main():
+# def main():
     
-    app = QApplication(sys.argv)
+#     app = QApplication(sys.argv)
     
-    ventana = ClaseUIDialog()    
-    ventana.setWindowTitle("Algoritmo de prioridad Expulsivo")
-    ventana.show()    
-    app.exec_()
+#     ventana = ClaseUIDialog()    
+#     ventana.setWindowTitle("Algoritmo de prioridad Expulsivo")
+#     ventana.show()    
+#     app.exec_()
     
-if __name__ == "__main__":
-    main()
+# if __name__ == "__main__":
+#     main()
