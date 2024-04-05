@@ -36,6 +36,8 @@ stop = False
 
 def algoritmo1():
     main.hide()
+    process_planner_1.listaListos.clear()
+    process_planner_1.listaTodosProcesos.clear()
     window = MainWindowFCFS(process_planner_1)
     process_planner_1.play.clicked.connect(lambda: startFCFS(window))
     process_planner_1.stop.clicked.connect(lambda: stopFCFS(window))
@@ -44,6 +46,8 @@ def algoritmo1():
 
 def algoritmo2():
     main.hide()
+    process_planner_2.listaListos.clear()
+    process_planner_2.listaTodosProcesos.clear()
     window = MainWindowSJF(process_planner_2)
     process_planner_2.play.clicked.connect(lambda: startSJF(window))
     process_planner_2.stop.clicked.connect(lambda: stopSJF(window))
@@ -218,9 +222,11 @@ main.algoritmo7.clicked.connect(algoritmo7)
 
 def algoritmo5():
     main.hide()
+    process_planner_5.listaListos.clear()
+    process_planner_5.listaTodosProcesos.clear()
     window = MainWindowRobin(process_planner_5)
     process_planner_5.play.clicked.connect(lambda: startRobRobin(window))
-    process_planner_2.stop.clicked.connect(lambda: stopSJF(window))
+    process_planner_5.stop.clicked.connect(lambda: stopRobRobin(window))
     process_planner_5.label_2.setText(main.algoritmo5.text())
     process_planner_5.show()
 
@@ -403,7 +409,7 @@ def back_to_menu():
     process_planner_1.hide()
     process_planner_2.hide()
     process_planner_5.hide()
-
+    threadpool.clear()
     process_planner_3.hide()
     process_planner_6.hide()
     main.show()

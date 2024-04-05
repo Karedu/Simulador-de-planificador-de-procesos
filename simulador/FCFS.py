@@ -38,6 +38,14 @@ class MainWindowFCFS(Utils):
         self.bloqued_processes = []
         self.clock_cycle = 0
         self.prepared_queue = Queue()
+        self.processes = []
+        self.process = []
+        self.processes_quantity = 0
+        self.completed_processes = []
+        self.bloqued_processes = []
+        self.clock_cycle = 0
+        self.total_block_time= 0
+
     # Metodo para pausar la simulacion
     def stop_simulation(self):
         self.pause_flag = True
@@ -56,7 +64,7 @@ class MainWindowFCFS(Utils):
         self.clear_promedy_data(self.mutex,self.wigets)
         self.clear_totalList(self.mutex,self.wigets)
         self.clear_all_process(self.mutex,self.wigets)
-        
+
         # Creamos la lista aleatoria y declaramos los arrays auxiliares que usaremos para procesar la data, ademas de variables a usar
         self.processes = self.generar_valores_aleatorios(quantity_process)
         self.processes_quantity = len(self.processes)
@@ -64,6 +72,7 @@ class MainWindowFCFS(Utils):
         self.bloqued_processes = []
         self.clock_cycle = 0
         self.prepared_queue = Queue()
+        self.total_block_time = 0
 
         # Mostramos todos los procesos que fueron creados
         self.show_listProcess(self.mutex,self.wigets,self.processes)
@@ -84,10 +93,12 @@ class MainWindowFCFS(Utils):
                 if not self.completed_processes:
                     self.wigets.listaPromedios.addItem(f"Cantidad de procesos completados:  0")
                     self.wigets.listaPromedios.addItem(f"Tiempo promedio en CPU:  0")
+                    self.wigets.listaPromedios.addItem(f"Porcentaje de uso del procesador:  0")
                     self.wigets.listaPromedios.addItem(f"Tiempo promedio de llegada:  0")
                     self.wigets.listaPromedios.addItem(f"Tiempo promedio de servicio:  0")
+                    self.wigets.listaPromedios.addItem(f"Tiempo promedio de bloqueo:  0")
                 else:
-                    self.calculate_promedy(self.wigets,self.completed_processes)
+                    self.calculate_promedy(self.wigets,self.completed_processes,self.total_block_time,self.clock_cycle)
                 return
             # Verificamos si hay procesos en cola para ser ejecutados por el CPU
             if self.prepared_queue.empty():
@@ -97,10 +108,12 @@ class MainWindowFCFS(Utils):
                     if not self.completed_processes:
                         self.wigets.listaPromedios.addItem(f"Cantidad de procesos completados:  0")
                         self.wigets.listaPromedios.addItem(f"Tiempo promedio en CPU:  0")
+                        self.wigets.listaPromedios.addItem(f"Porcentaje de uso del procesador:  0")
                         self.wigets.listaPromedios.addItem(f"Tiempo promedio de llegada:  0")
                         self.wigets.listaPromedios.addItem(f"Tiempo promedio de servicio:  0")
+                        self.wigets.listaPromedios.addItem(f"Tiempo promedio de bloqueo:  0")
                     else:
-                        self.calculate_promedy(self.wigets,self.completed_processes)
+                        self.calculate_promedy(self.wigets,self.completed_processes,self.total_block_time,self.clock_cycle)
                     return
                 # SINO continuamos ciclo
                 self.remove_cpu(self.mutex,self.wigets)
@@ -154,17 +167,19 @@ class MainWindowFCFS(Utils):
 
             # Segundo ciclo para simular el avance de un ciclo de reloj
             while True:
-                print("stop, ",stop)
+
                 if self.pause_flag == True:
                     self.show_details(self.mutex,self.wigets,"Finalizo simulacion")
                     self.activate_button(self.wigets)
                     if not self.completed_processes:
                         self.wigets.listaPromedios.addItem(f"Cantidad de procesos completados:  0")
                         self.wigets.listaPromedios.addItem(f"Tiempo promedio en CPU:  0")
+                        self.wigets.listaPromedios.addItem(f"Porcentaje de uso del procesador:  0")
                         self.wigets.listaPromedios.addItem(f"Tiempo promedio de llegada:  0")
                         self.wigets.listaPromedios.addItem(f"Tiempo promedio de servicio:  0")
+                        self.wigets.listaPromedios.addItem(f"Tiempo promedio de bloqueo:  0")
                     else:
-                        self.calculate_promedy(self.wigets,self.completed_processes)
+                        self.calculate_promedy(self.wigets,self.completed_processes,self.total_block_time,self.clock_cycle)
                     return
                 
                 self.clock_cycle = self.clock_cycle + 1
@@ -267,7 +282,7 @@ class MainWindowFCFS(Utils):
                         self.activate_button(self.wigets)
                         self.show_details(self.mutex,self.wigets,"FIN SIMULACION")
                         # Calculamos e imprimimos los valores promedios de los tiempos de los procesos
-                        self.calculate_promedy(self.wigets,self.completed_processes)
+                        self.calculate_promedy(self.wigets,self.completed_processes,self.total_block_time,self.clock_cycle)
                         return self.completed_processes
                     
                     break

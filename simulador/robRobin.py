@@ -62,6 +62,7 @@ class MainWindowRobin(Utils):
         self.bloqued_processes = []
         self.prepared_queue = Queue() 
         self.clock_cycle = 0
+        self.total_block_time = 0
 
         # Mostramos todos los procesos que fueron creados
         self.show_listProcess(self.mutex,self.wigets,self.processes)
@@ -69,6 +70,19 @@ class MainWindowRobin(Utils):
         # Buscamos en los procesos si hay algun proceso que llego en ciclo 0
         for compare_process in self.processes:
             if compare_process["arrival_time"] == 0:
+                if self.pause_flag == True:
+                    self.show_details(self.mutex,self.wigets,"Finalizo simulacion")
+                    self.activate_button(self.wigets)
+                    if not self.completed_processes:
+                        self.wigets.listaPromedios.addItem(f"Cantidad de procesos completados:  0")
+                        self.wigets.listaPromedios.addItem(f"Tiempo promedio en CPU:  0")
+                        self.wigets.listaPromedios.addItem(f"Porcentaje de uso del procesador:  0")
+                        self.wigets.listaPromedios.addItem(f"Tiempo promedio de llegada:  0")
+                        self.wigets.listaPromedios.addItem(f"Tiempo promedio de servicio:  0")
+                        self.wigets.listaPromedios.addItem(f"Tiempo promedio de bloqueo:  0")
+                    else:
+                        self.calculate_promedy(self.wigets,self.completed_processes,self.total_block_time,self.clock_cycle)
+                    return
                 self.prepared_queue.put(compare_process)
                 self.show_process(self.mutex,self.wigets,compare_process)
                 self.show_details(self.mutex,self.wigets,f"LLEGO TAREA {compare_process["name"]}, en ciclo {self.clock_cycle} Se agrega a  la cola de tareas el proceso...")
@@ -82,24 +96,27 @@ class MainWindowRobin(Utils):
                 if not self.completed_processes:
                     self.wigets.listaPromedios.addItem(f"Cantidad de procesos completados:  0")
                     self.wigets.listaPromedios.addItem(f"Tiempo promedio en CPU:  0")
+                    self.wigets.listaPromedios.addItem(f"Porcentaje de uso del procesador:  0")
                     self.wigets.listaPromedios.addItem(f"Tiempo promedio de llegada:  0")
                     self.wigets.listaPromedios.addItem(f"Tiempo promedio de servicio:  0")
+                    self.wigets.listaPromedios.addItem(f"Tiempo promedio de bloqueo:  0")
                 else:
-                    self.calculate_promedy(self.wigets,self.completed_processes)
+                    self.calculate_promedy(self.wigets,self.completed_processes,self.total_block_time,self.clock_cycle)
                 return
             # Verificamos si hay procesos en cola para ser ejecutados por el CPU
             if self.prepared_queue.empty():
-
                 if self.pause_flag == True:
                     self.show_details(self.mutex,self.wigets,"Finalizo simulacion")
                     self.activate_button(self.wigets)
                     if not self.completed_processes:
                         self.wigets.listaPromedios.addItem(f"Cantidad de procesos completados:  0")
                         self.wigets.listaPromedios.addItem(f"Tiempo promedio en CPU:  0")
+                        self.wigets.listaPromedios.addItem(f"Porcentaje de uso del procesador:  0")
                         self.wigets.listaPromedios.addItem(f"Tiempo promedio de llegada:  0")
                         self.wigets.listaPromedios.addItem(f"Tiempo promedio de servicio:  0")
+                        self.wigets.listaPromedios.addItem(f"Tiempo promedio de bloqueo:  0")
                     else:
-                        self.calculate_promedy(self.wigets,self.completed_processes)
+                        self.calculate_promedy(self.wigets,self.completed_processes,self.total_block_time,self.clock_cycle)
                     return
             
                 # SINO continuamos ciclo
@@ -161,10 +178,12 @@ class MainWindowRobin(Utils):
                     if not self.completed_processes:
                         self.wigets.listaPromedios.addItem(f"Cantidad de procesos completados:  0")
                         self.wigets.listaPromedios.addItem(f"Tiempo promedio en CPU:  0")
+                        self.wigets.listaPromedios.addItem(f"Porcentaje de uso del procesador:  0")
                         self.wigets.listaPromedios.addItem(f"Tiempo promedio de llegada:  0")
                         self.wigets.listaPromedios.addItem(f"Tiempo promedio de servicio:  0")
+                        self.wigets.listaPromedios.addItem(f"Tiempo promedio de bloqueo:  0")
                     else:
-                        self.calculate_promedy(self.wigets,self.completed_processes)
+                        self.calculate_promedy(self.wigets,self.completed_processes,self.total_block_time,self.clock_cycle)
                     return
                 
                 task_cycles = task_cycles + 1
@@ -180,7 +199,7 @@ class MainWindowRobin(Utils):
                     # SI si, le restamos el tiempo de espera bloqueado al proceso que este de primero en la cola de bloqueados
                     process_blocked = self.bloqued_processes[0]
                     process_blocked["time_blocked"] = process_blocked["time_blocked"] - 1
-
+                    self.total_block_time = self.total_block_time + self.total_block_time 
                     # Si el proceso bloqueado ya no tiene tiene tiempo bloqueado , se vuelve a reeencolar en la cola de listos
                     if process_blocked["time_blocked"] == 0:
                         self.remove_block_process(self.mutex,self.wigets)
@@ -270,7 +289,7 @@ class MainWindowRobin(Utils):
                         self.activate_button(self.wigets)
                         self.show_details(self.mutex,self.wigets,"FIN SIMULACION")
                         # Calculamos e imprimimos los valores promedios de los tiempos de los procesos
-                        self.calculate_promedy(self.wigets,self.completed_processes)
+                        self.calculate_promedy(self.wigets,self.completed_processes,self.total_block_time,self.clock_cycle)
                         return self.completed_processes
                     break
                 

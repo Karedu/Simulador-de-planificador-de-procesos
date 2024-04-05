@@ -28,7 +28,7 @@ class Utils:
 
     # Metodo para calcular los promedio de tiempos de los procesos
     @staticmethod
-    def calculate_promedy(wigets,processes):
+    def calculate_promedy(wigets,processes,block_time,clock_time):
         average_waiting_time = 0
         average_service_time = 0
         average_CPU_time = 0
@@ -46,11 +46,15 @@ class Utils:
         average_CPU_time /= quantity
         average_waiting_time /= quantity
         average_service_time /= quantity
+        average_cpu_use = (average_CPU_time * 100) / clock_time
+        average_block_time = block_time/quantity
 
-        wigets.listaPromedios.addItem(f"Cantidad de procesos completados:  {quantity}")
-        wigets.listaPromedios.addItem(f"Tiempo promedio en CPU:  {average_CPU_time}")
-        wigets.listaPromedios.addItem(f"Tiempo promedio de llegada:  {average_waiting_time}")
-        wigets.listaPromedios.addItem(f"Tiempo promedio de servicio:  {average_service_time}")
+        wigets.listaPromedios.addItem(f"Cantidad de procesos completados:  {round(quantity,2)}")
+        wigets.listaPromedios.addItem(f"Porcentaje de uso del procesador:  {round(average_cpu_use,2)} %")
+        wigets.listaPromedios.addItem(f"Tiempo promedio en CPU:  {round(average_CPU_time,2)}")
+        wigets.listaPromedios.addItem(f"Tiempo promedio de llegada:  {round(average_waiting_time,2)}")
+        wigets.listaPromedios.addItem(f"Tiempo promedio de servicio:  {round(average_service_time,2)}")
+        wigets.listaPromedios.addItem(f"Tiempo promedio de bloqueo:  {round(average_block_time,2)}")
 
         return {
             "average_CPU_time": average_CPU_time,
