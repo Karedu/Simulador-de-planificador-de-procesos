@@ -13,7 +13,7 @@ class ClaseUIDialog2(QMainWindow, Ui_MainWindow):
         super(ClaseUIDialog2, self).__init__(parent)
         
         self.setupUi(self)       
-        self.startEmulation.clicked.connect(self.non_preemptive_priority_algorithm)
+        self.Button1.clicked.connect(self.non_preemptive_priority_algorithm)
         self.ButtonLoadProcess.clicked.connect(self.load_processes)        
         self.ButtonGenerate.clicked.connect(self.generate_processes)
         self.clearButton.clicked.connect(self.clean_windows)     
@@ -21,7 +21,7 @@ class ClaseUIDialog2(QMainWindow, Ui_MainWindow):
                 
         self.proceso_anterior = None        
         self.startProcess = False
-        self.startEmulation.setEnabled(False)  
+        self.Button1.setEnabled(False)  
         self.ButtonLoadProcess.setEnabled(False)
         self.ButtonAverages.setEnabled(False)
         
@@ -109,7 +109,7 @@ class ClaseUIDialog2(QMainWindow, Ui_MainWindow):
                     current_time = self.processes[0]['llegada']
                     
         
-        self.startEmulation.setEnabled(False)        
+        self.Button1.setEnabled(False)        
         
         sum_tg = sum(proceso['tiempoGiro'] for proceso in self.finishTimesList)
         sum_te = sum(proceso['tiempoEspera'] for proceso in self.finishTimesList)
@@ -140,7 +140,7 @@ class ClaseUIDialog2(QMainWindow, Ui_MainWindow):
             self.processTable_2.setItem(i, 3, QTableWidgetItem(str(auxProcess['prioridad'])))
             self.processTable_2.setItem(i, 4, QTableWidgetItem(str(auxProcess['tiempo_restante'])))
             
-        self.startEmulation.setEnabled(True)
+        self.Button1.setEnabled(True)
      
    
             
