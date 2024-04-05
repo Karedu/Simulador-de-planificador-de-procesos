@@ -9,8 +9,6 @@ from utils import Utils
 # La libreria Utils es una clase que usaremos como librerias de funciones auxiliares que usaremos utiles para procesos como ver en pantalla , borrar de pantalla , etc 
 # Para mas detalles revisar el archivo "utils.py"
 
-# Inicializo un treathpool para administrar y ejecutar todos los procesos que se van a ejecutar
-threadpool = QThreadPool()
 
 # Clase principal que nos permite iniciar la simulacion del algoritmo SJF
 class MainWindowSJF(Utils):
@@ -36,6 +34,7 @@ class MainWindowSJF(Utils):
         self.pause_flag = True
     # Metodo del algoritmo
     def sjf(self):
+        self.pause_flag = False
         # Obtenemos el valor ingresado por el usuario en el wiget para determinar cuantas operaciones queremos generar
         quantity_process = self.wigets.cantidad.value()
         if quantity_process == 0:
@@ -287,9 +286,11 @@ class MainWindowSJF(Utils):
         return   
     
 # Funcion que permitira iniciar la simulacion
-
+threadpool = QThreadPool()
 
 def startSJF(windows):
+    # Inicializo un treathpool para administrar y ejecutar todos los procesos que se van a ejecutar
+   
     threadpool.clear()
     worker = Worker(windows.sjf)
     threadpool.start(worker)

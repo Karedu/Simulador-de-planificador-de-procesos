@@ -125,7 +125,10 @@ padding: 15px;</string>
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="algoritmo4">
+      <widget class="QPushButton" name="algoritmo7">
+       <property name="mouseTracking">
+        <bool>false</bool>
+       </property>
        <property name="styleSheet">
         <string notr="true">font: 600 8pt &quot;Yu Gothic UI Semibold&quot;;
 color: black;
@@ -213,10 +216,7 @@ padding: 15px;</string>
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="algoritmo7">
-       <property name="mouseTracking">
-        <bool>false</bool>
-       </property>
+      <widget class="QPushButton" name="algoritmo4">
        <property name="styleSheet">
         <string notr="true">font: 600 8pt &quot;Yu Gothic UI Semibold&quot;;
 color: black;
@@ -258,7 +258,7 @@ background-color: rgba(170, 0, 0, 180);</string>
      <x>0</x>
      <y>0</y>
      <width>750</width>
-     <height>21</height>
+     <height>26</height>
     </rect>
    </property>
   </widget>
