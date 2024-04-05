@@ -7,13 +7,13 @@
     <x>0</x>
     <y>0</y>
     <width>750</width>
-    <height>600</height>
+    <height>700</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>750</width>
-    <height>600</height>
+    <height>700</height>
    </size>
   </property>
   <property name="maximumSize">
@@ -27,7 +27,8 @@
   </property>
   <property name="styleSheet">
    <string notr="true">QWidget#centralwidget{
-background-color: qlineargradient(spread:pad, x1:0.092, y1:0.908909, x2:1, y2:0, stop:0.477273 rgba(26, 76, 107, 255), stop:0.943182 rgba(9, 32, 82, 255));}</string>
+	background-color: rgb(2, 89, 81);
+}</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QLabel" name="label">
@@ -50,9 +51,9 @@ color: white;</string>
    <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
-      <x>240</x>
-      <y>90</y>
-      <width>261</width>
+      <x>10</x>
+      <y>70</y>
+      <width>731</width>
       <height>41</height>
      </rect>
     </property>
@@ -61,19 +62,20 @@ color: white;</string>
     </property>
     <property name="styleSheet">
      <string notr="true">font: 600 18pt &quot;Segoe UI Semibold&quot;;
-color: white;</string>
+color: rgb(255, 85, 0);
+text-align: center;</string>
     </property>
     <property name="text">
-     <string>Seleccione el algoritmo</string>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:20pt; font-style:italic;&quot;&gt;Seleccione el algoritmo&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
    <widget class="QWidget" name="no_expulsivo" native="true">
     <property name="geometry">
      <rect>
       <x>50</x>
-      <y>180</y>
+      <y>170</y>
       <width>281</width>
-      <height>231</height>
+      <height>321</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -84,9 +86,9 @@ color: white;</string>
       <widget class="QPushButton" name="algoritmo1">
        <property name="styleSheet">
         <string notr="true">font: 600 8pt &quot;Yu Gothic UI Semibold&quot;;
-color: white;
+color: black;
 border-radius: 20px;
-background-color: rgba(85, 85, 127, 190);
+background-color: rgb(255, 170, 0);
 padding: 15px;</string>
        </property>
        <property name="text">
@@ -98,9 +100,9 @@ padding: 15px;</string>
       <widget class="QPushButton" name="algoritmo2">
        <property name="styleSheet">
         <string notr="true">font: 600 8pt &quot;Yu Gothic UI Semibold&quot;;
-color: white;
+color: black;
 border-radius: 20px;
-background-color: rgba(85, 85, 127, 190);
+background-color: rgb(255, 170, 0);
 padding: 15px;</string>
        </property>
        <property name="text">
@@ -112,9 +114,9 @@ padding: 15px;</string>
       <widget class="QPushButton" name="algoritmo3">
        <property name="styleSheet">
         <string notr="true">font: 600 8pt &quot;Yu Gothic UI Semibold&quot;;
-color: white;
+color: black;
 border-radius: 20px;
-background-color: rgba(85, 85, 127, 190);
+background-color: rgb(255, 170, 0);
 padding: 15px;</string>
        </property>
        <property name="text">
@@ -126,9 +128,9 @@ padding: 15px;</string>
       <widget class="QPushButton" name="algoritmo4">
        <property name="styleSheet">
         <string notr="true">font: 600 8pt &quot;Yu Gothic UI Semibold&quot;;
-color: white;
+color: black;
 border-radius: 20px;
-background-color: rgba(85, 85, 127, 190);
+background-color: rgb(255, 170, 0);
 padding: 15px;</string>
        </property>
        <property name="text">
@@ -141,9 +143,9 @@ padding: 15px;</string>
    <widget class="QLabel" name="label_4">
     <property name="geometry">
      <rect>
-      <x>500</x>
-      <y>140</y>
-      <width>131</width>
+      <x>510</x>
+      <y>150</y>
+      <width>111</width>
       <height>31</height>
      </rect>
     </property>
@@ -152,24 +154,24 @@ padding: 15px;</string>
 color: white;</string>
     </property>
     <property name="text">
-     <string>Expulsivos</string>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:16pt; font-style:italic;&quot;&gt;Expulsivos&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_3">
     <property name="geometry">
      <rect>
-      <x>110</x>
-      <y>140</y>
+      <x>130</x>
+      <y>150</y>
       <width>151</width>
       <height>31</height>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">font: 600 18pt &quot;Segoe UI Semibold&quot;;
+     <string notr="true">font: 600 16pt &quot;Segoe UI Semibold&quot;;
 color: white;</string>
     </property>
     <property name="text">
-     <string>No expulsivos</string>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-style:italic;&quot;&gt;No expulsivos&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
    <widget class="QWidget" name="no_expulsivo_2" native="true">
@@ -178,7 +180,7 @@ color: white;</string>
       <x>420</x>
       <y>170</y>
       <width>281</width>
-      <height>231</height>
+      <height>261</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -186,9 +188,9 @@ color: white;</string>
       <widget class="QPushButton" name="algoritmo5">
        <property name="styleSheet">
         <string notr="true">font: 600 8pt &quot;Yu Gothic UI Semibold&quot;;
-color: white;
+color: black;
 border-radius: 20px;
-background-color: rgba(85, 85, 127, 190);
+background-color: rgb(255, 170, 0);
 padding: 15px;</string>
        </property>
        <property name="text">
@@ -200,9 +202,9 @@ padding: 15px;</string>
       <widget class="QPushButton" name="algoritmo6">
        <property name="styleSheet">
         <string notr="true">font: 600 8pt &quot;Yu Gothic UI Semibold&quot;;
-color: white;
+color: black;
 border-radius: 20px;
-background-color: rgba(85, 85, 127, 190);
+background-color: rgb(255, 170, 0);
 padding: 15px;</string>
        </property>
        <property name="text">
@@ -212,11 +214,14 @@ padding: 15px;</string>
      </item>
      <item>
       <widget class="QPushButton" name="algoritmo7">
+       <property name="mouseTracking">
+        <bool>false</bool>
+       </property>
        <property name="styleSheet">
         <string notr="true">font: 600 8pt &quot;Yu Gothic UI Semibold&quot;;
-color: white;
+color: black;
 border-radius: 20px;
-background-color: rgba(85, 85, 127, 190);
+background-color: rgb(255, 170, 0);
 padding: 15px;</string>
        </property>
        <property name="text">
@@ -230,7 +235,7 @@ padding: 15px;</string>
     <property name="geometry">
      <rect>
       <x>660</x>
-      <y>413</y>
+      <y>530</y>
       <width>61</width>
       <height>31</height>
      </rect>

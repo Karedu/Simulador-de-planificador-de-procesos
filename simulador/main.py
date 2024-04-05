@@ -17,8 +17,6 @@ threadpool = QThreadPool()
 app = QApplication(sys.argv)
 window_pr1 = None
 
-
-
 # cargar los archivos .ui
 main = uic.loadUi("main_window.ui")
 process_planner_1 = uic.loadUi("process_window_1.ui")
@@ -32,7 +30,6 @@ process_planner_7 = uic.loadUi("priority_not_ex.ui")
 num_process = 1
 speed = 1
 stop = False
-
 
 def algoritmo1():
     main.hide()
@@ -154,7 +151,7 @@ def simulation_algoritmo3():
         # 4. Ejecuto proceso en CPU 
         if len(process_running) != 0:
             # Bloquear proceso en cpu en caso de cumplirse lo siguiente
-            if random.randint(1,5) == 1:
+            if random.randint(1,8) == 1:
                 print("PROCESO BLOQUEADO")
                 process_running[0].running = False
                 process_running[0].ticket.clear()
