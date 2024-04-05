@@ -175,10 +175,11 @@ class ClaseUIDialog2(QMainWindow, Ui_MainWindow):
        
     def show_averages(self):
         boxOutPrint = QMessageBox()
-        boxOutPrint.setIcon(QMessageBox.Information)
+        boxOutPrint.setIcon(QMessageBox.Icon.Information)
         boxOutPrint.setText(f"Tiempo promedio de giro: {self.average_turning_time:.2f}\nTiempo promedio de espera: {self.average_waiting_time:.2f}")
         boxOutPrint.setWindowTitle("Promedios")
-        boxOutPrint.exec_()
+        boxOutPrint.exec()
+
              
 
 def main():
