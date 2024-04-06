@@ -4,7 +4,8 @@ from PyQt6.QtCore import QMutex
 from queue import Queue
 import time
 import random
-
+import sys
+from PyQt6.QtWidgets import QApplication
 from utils import Utils
 # La libreria Utils es una clase que usaremos como librerias de funciones auxiliares que usaremos utiles para procesos como ver en pantalla , borrar de pantalla , etc 
 # Para mas detalles revisar el archivo "utils.py"
@@ -301,4 +302,3 @@ def stopSJF(window):
     window.stop_simulation()
     threadpool.clear()
     window.mutex.unlock()
-
