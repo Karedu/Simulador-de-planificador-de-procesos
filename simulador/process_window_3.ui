@@ -80,20 +80,6 @@ text-align: center;</string>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout_3">
      <item>
-      <widget class="QPushButton" name="regresar">
-       <property name="styleSheet">
-        <string notr="true">font: 600 8pt &quot;Yu Gothic UI Semibold&quot;;
-color: white;
-border-radius: 15px;
-padding: 8px;
-background-color: rgba(170, 0, 0, 180);</string>
-       </property>
-       <property name="text">
-        <string>Regresar</string>
-       </property>
-      </widget>
-     </item>
-     <item>
       <widget class="QPushButton" name="salir">
        <property name="styleSheet">
         <string notr="true">font: 600 8pt &quot;Yu Gothic UI Semibold&quot;;

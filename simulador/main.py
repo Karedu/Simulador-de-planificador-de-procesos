@@ -19,12 +19,15 @@ window_pr1 = None
 
 # cargar los archivos .ui
 main = uic.loadUi("main_window.ui")
-process_planner_1 = uic.loadUi("process_window_1.ui")
-process_planner_2 = uic.loadUi("process_window_2.ui")
-process_planner_3 = uic.loadUi("process_window_3.ui")
-process_planner_5 = uic.loadUi("process_window_5.ui")
-process_planner_6 = uic.loadUi("process_window_6.ui")
+# Crear una nueva instancia de QApplication para la ventana secundaria
+app2 = QApplication(sys.argv)
+
+
+
+
+
 process_planner_7 = uic.loadUi("priority_not_ex.ui")
+
 
 # variables para la configuracion del simulador
 num_process = 1
@@ -32,7 +35,10 @@ speed = 1
 stop = False
 
 def algoritmo1():
-    main.hide()
+   
+    global process_planner_1
+    process_planner_1 = uic.loadUi("process_window_1.ui")
+    process_planner_1.salir.clicked.connect(quit)  
     process_planner_1.listaListos.clear()
     process_planner_1.listaTodosProcesos.clear()
     window = MainWindowFCFS(process_planner_1)
@@ -42,7 +48,10 @@ def algoritmo1():
     process_planner_1.show()
 
 def algoritmo2():
-    main.hide()
+
+    global process_planner_2
+    process_planner_2 = uic.loadUi("process_window_2.ui")
+    process_planner_2.salir.clicked.connect(quit)
     process_planner_2.listaListos.clear()
     process_planner_2.listaTodosProcesos.clear()
     window = MainWindowSJF(process_planner_2)
@@ -50,6 +59,7 @@ def algoritmo2():
     process_planner_2.stop.clicked.connect(lambda: stopSJF(window))
     process_planner_2.label_2.setText(main.algoritmo2.text())
     process_planner_2.show()
+    
 
 def simulation_algoritmo3():
     # Simulacion con generacion de procesos aleatorios
@@ -197,7 +207,13 @@ def start_simulation3():
     threadpool.start(worker)
 
 def algoritmo3():
-    main.hide()
+
+    global process_planner_3
+    process_planner_3 = uic.loadUi("process_window_3.ui")
+    process_planner_3.spinBox.valueChanged.connect(number_process)
+    process_planner_3.spinBox_2.valueChanged.connect(speed_simulation)
+    process_planner_3.stop.clicked.connect(stop_simulation)
+    process_planner_3.salir.clicked.connect(quit)
     process_planner_3.stop.setEnabled(False)
     process_planner_3.play.pressed.connect(start_simulation3)
     process_planner_3.play.setCheckable(True)
@@ -218,7 +234,10 @@ main.algoritmo4.clicked.connect(algoritmo4)
 main.algoritmo7.clicked.connect(algoritmo7)
 
 def algoritmo5():
-    main.hide()
+  
+    global process_planner_5
+    process_planner_5 = uic.loadUi("process_window_5.ui")
+    process_planner_5.salir.clicked.connect(quit)
     process_planner_5.listaListos.clear()
     process_planner_5.listaTodosProcesos.clear()
     window = MainWindowRobin(process_planner_5)
@@ -226,10 +245,6 @@ def algoritmo5():
     process_planner_5.stop.clicked.connect(lambda: stopRobRobin(window))
     process_planner_5.label_2.setText(main.algoritmo5.text())
     process_planner_5.show()
-
-def algoritmo7():
-    main.hide()    
-    
 
 def simulation_algoritmo6():
     global stop
@@ -384,7 +399,12 @@ def start_simulation6():
     threadpool.start(worker)
     
 def algoritmo6():
-    main.hide()
+    global process_planner_6
+    process_planner_6 = uic.loadUi("process_window_6.ui")
+    process_planner_6.stop.clicked.connect(stop_simulation)
+    process_planner_6.spinBox.valueChanged.connect(number_process)
+    process_planner_6.spinBox_2.valueChanged.connect(speed_simulation)
+    process_planner_6.salir.clicked.connect(quit)
     process_planner_6.stop.setEnabled(False)
     process_planner_6.play.pressed.connect(start_simulation6)
     process_planner_6.play.setCheckable(True)
@@ -402,40 +422,16 @@ def stop_simulation():
     global stop
     stop = True
 
-def back_to_menu():
-    process_planner_1.hide()
-    process_planner_2.hide()
-    process_planner_5.hide()
-    threadpool.clear()
-    process_planner_3.hide()
-    process_planner_6.hide()
-    main.show()
+
 
 # botones de los algoritmos
 main.algoritmo1.clicked.connect(algoritmo1)
 main.algoritmo2.clicked.connect(algoritmo2)
 main.algoritmo3.clicked.connect(algoritmo3)
-
 main.algoritmo5.clicked.connect(algoritmo5)
 main.algoritmo6.clicked.connect(algoritmo6)
-
 main.salir.clicked.connect(quit)
-process_planner_1.regresar.clicked.connect(back_to_menu)
-process_planner_2.regresar.clicked.connect(back_to_menu)
-process_planner_3.regresar.clicked.connect(back_to_menu)
-process_planner_5.regresar.clicked.connect(back_to_menu)
-process_planner_6.regresar.clicked.connect(back_to_menu)
-process_planner_3.stop.clicked.connect(stop_simulation)
-process_planner_6.stop.clicked.connect(stop_simulation)
-process_planner_3.spinBox.valueChanged.connect(number_process)
-process_planner_6.spinBox.valueChanged.connect(number_process)
-process_planner_3.spinBox_2.valueChanged.connect(speed_simulation)
-process_planner_6.spinBox_2.valueChanged.connect(speed_simulation)
-process_planner_1.salir.clicked.connect(quit)
-process_planner_2.salir.clicked.connect(quit)
-process_planner_3.salir.clicked.connect(quit)
-process_planner_5.salir.clicked.connect(quit)
-process_planner_6.salir.clicked.connect(quit)
+
 
 main.show()
 sys.exit(app.exec())
