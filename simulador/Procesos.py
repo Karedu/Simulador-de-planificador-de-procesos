@@ -6,12 +6,12 @@ class Process:
     self.burst_time = burst_time ## tiempo de procesamiento
     self.time_cpu = burst_time  ## tiempo restante de procesamiento
     self.arrival_time = arrival_time  ## tiempo de llegada del proceso
-    self.wait_time = 0
+    self.wait_time = 0  # tiempo de espera
     self.block_time = 0 # tiempo en lista de bloqueado
     self.time_blocked = 0 # Tiempo total bloqueado
-    self.lock_number = 0
+    self.lock_number = 0  # numero de bloqueos totales
     self.completion_time = 0  # tiempo de finalización
-    self.num_ticket = 0
+    self.num_ticket = 0  # numero de tickes asignados
     self.ticket = []
     self.waiting = True
     self.running = False
