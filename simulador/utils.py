@@ -52,7 +52,7 @@ class Utils:
         wigets.listaPromedios.addItem(f"Cantidad de procesos completados:  {round(quantity,2)}")
         wigets.listaPromedios.addItem(f"Porcentaje de uso del procesador:  {round(average_cpu_use,2)} %")
         wigets.listaPromedios.addItem(f"Tiempo promedio en CPU:  {round(average_CPU_time,2)}")
-        wigets.listaPromedios.addItem(f"Tiempo promedio de llegada:  {round(average_waiting_time,2)}")
+        wigets.listaPromedios.addItem(f"Tiempo promedio de espera:  {round(average_waiting_time,2)}")
         wigets.listaPromedios.addItem(f"Tiempo promedio de servicio:  {round(average_service_time,2)}")
         wigets.listaPromedios.addItem(f"Tiempo promedio de bloqueo:  {round(average_block_time,2)}")
 
