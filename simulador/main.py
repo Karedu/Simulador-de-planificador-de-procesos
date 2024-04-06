@@ -30,7 +30,7 @@ process_planner_7 = uic.loadUi("priority_not_ex.ui")
 
 
 # variables para la configuracion del simulador
-num_process = 1
+num_process = 0
 speed = 1
 stop = False
 
@@ -94,8 +94,8 @@ def simulation_algoritmo3():
     process_planner_3.t_proc_comp.setText("Total de procesos completados: ")
     process_planner_3.t_total.setText("Tiempo total: ")
     in_cpu = 0
-    while (len(list_waiting) > 0 or len(process_running) > 0 or len(list_blocked) > 0 or n_process > 0) and not(stop):        
-        # 0. Todos los procesos completados del cpu a terminados
+    while (len(list_terminated) != c_process or n_process > 0) and not(stop):        
+        # 1. Todos los procesos completados del cpu a terminados
         if len(process_running) != 0:
             if process_running[0].terminated:
                 process_running[0].completion_time = process_running[0].wait_time + process_running[0].burst_time
@@ -108,17 +108,17 @@ def simulation_algoritmo3():
             for process in list_terminated:
                 process_planner_3.listWidget_2.addItem(str(process))
             time.sleep(speed/2)
-        # 1.  Seleccion del proceso ganador
+        # 2.  Seleccion del proceso ganador
         if len(process_running) == 0 and len(list_waiting) != 0:
-            win_ticket = random.choice(list_ticket)
+            win_ticket = random.choice(list_ticket) # se seleciona el ticket ganador atrave de la función random.choice() y la lista de ticket disponibles
             process_planner_3.label_13.setText(str(win_ticket))            
-            in_cpu = win_process(win_ticket, list_waiting)            
+            in_cpu = win_process(win_ticket, list_waiting) # se busca el proceso que posee el ticket ganador         
             # Pasar el proceso ganador al CPU y eliminarlos de listos
-            process_running.append(list_waiting[in_cpu])
-            list_ticket = del_ticket_process(process_running[0].ticket, list_ticket)
+            process_running.append(list_waiting[in_cpu]) 
+            list_ticket = del_ticket_process(process_running[0].ticket, list_ticket) # se elimina el ticket y los ticket que posea el proceso ganador
             process_running[0].running = True           
             process_planner_3.listWidget.clear()
-            list_waiting.remove(list_waiting[in_cpu])
+            list_waiting.remove(list_waiting[in_cpu]) # Se elimina el proceso ganador de la lista de espera
             process_planner_3.label_12.setText(str(process_running[0]))
             time.sleep(speed/2)
         # Actualizar lista de listos
@@ -126,7 +126,7 @@ def simulation_algoritmo3():
         for process in list_waiting:
             process_planner_3.listWidget.addItem(str(process))
             process.wait_time += 1 
-        # 2. Ejucutar el primer proceso en la lista de bloqueado
+        # 3. Ejucutar el primer proceso en la lista de bloqueado
         if len(list_blocked) != 0:
             if list_blocked[0].block_time == 0:
                 #pasar proceso de bloqueado a lista de espera
@@ -142,7 +142,7 @@ def simulation_algoritmo3():
             for process in list_blocked:
                 process_planner_3.listWidget_3.addItem(str(process))
             time.sleep(speed/2)
-        # 3. Creacion de procesos random
+        # 4. Creacion de procesos random
         if (random.randint(1,4) == 1 or len(list_waiting) == 0) and n_process > 0 and clock_time > 0:
             print("PROCESO CREADO")
             c_process += 1
@@ -158,7 +158,7 @@ def simulation_algoritmo3():
         for process in list_waiting:
             process_planner_3.listWidget.addItem(str(process))
         time.sleep(speed/2)
-        # 4. Ejecuto proceso en CPU 
+        # 5. Ejecuto proceso en CPU 
         if len(process_running) != 0:
             # Bloquear proceso en cpu en caso de cumplirse lo siguiente
             if random.randint(1,8) == 1:
@@ -205,7 +205,7 @@ def simulation_algoritmo3():
 def start_simulation3():
     worker = Worker(simulation_algoritmo3)
     threadpool.start(worker)
-
+   
 def algoritmo3():
 
     global process_planner_3
@@ -278,9 +278,9 @@ def simulation_algoritmo6():
     process_planner_6.t_proc_comp.setText("Total de procesos completados: ")
     process_planner_6.t_total.setText("Tiempo total: ")
 
-    while (len(list_waiting) > 0 or len(process_running) > 0 or len(list_blocked) > 0 or n_process > 0) and not(stop):
+    while (len(list_terminated) != c_process or n_process > 0) and not(stop):
         minor = 0
-        # 0. Todos los procesos completados del cpu a terminados
+        # 1. Todos los procesos completados del cpu a terminados
         if len(process_running) != 0:
             if process_running[0].terminated:
                 process_running[0].completion_time = process_running[0].wait_time + process_running[0].burst_time
@@ -292,10 +292,10 @@ def simulation_algoritmo6():
             process_planner_6.listWidget_2.clear()
             for process in list_terminated:
                 process_planner_6.listWidget_2.addItem(str(process))
-        # 1. Seleccion del proceso en listo con el menor tiempo en CPU 
+        # 2. Seleccion del proceso en listo con el menor tiempo en CPU 
         if len(list_waiting) != 0:            
-            min_time_process = list_waiting[0].time_cpu
-            for process in list_waiting:
+            min_time_process = list_waiting[0].time_cpu # Previamente se asigna el primer proceso como el menor tiempo
+            for process in list_waiting: # este bucle nos permite conocer el proceso en listo con el menor tiempo
                 if process.time_cpu < min_time_process:
                     min_time_process = process.time_cpu
                     minor = list_waiting.index(process)
@@ -321,7 +321,7 @@ def simulation_algoritmo6():
             process.wait_time += 1 
             process_planner_6.listWidget.addItem(str(process))
         time.sleep(speed/2)
-        # 2. Ejecutar el primer proceso en la lista de bloqueado
+        # 3. Ejecutar el primer proceso en la lista de bloqueado
         if len(list_blocked) != 0:
             if list_blocked[0].block_time == 0:
                 #pasar proceso de bloqueado a lista de espera
@@ -335,7 +335,7 @@ def simulation_algoritmo6():
             process_planner_6.listWidget_3.clear()
             for process in list_blocked:
                 process_planner_6.listWidget_3.addItem(str(process))
-        # 3. Creacion de procesos random
+        # 4. Creacion de procesos random
         if (random.randint(1,4) == 1 or len(list_waiting) == 0) and n_process > 0 and clock_time > 0:
             print("PROCESO CREADO")
             c_process += 1
@@ -348,10 +348,10 @@ def simulation_algoritmo6():
         for process in list_waiting:
             process_planner_6.listWidget.addItem(str(process))
         time.sleep(speed/2)        
-        # 4. Ejecutar proceso en CPU 
+        # 5. Ejecutar proceso en CPU 
         if len(process_running) > 0:
             # Bloquear proceso en cpu en caso de cumplirse lo siguiente
-            if random.randint(1,5) == 1:
+            if random.randint(1,8) == 1:
                 print("PROCESO BLOQUEADO")
                 process_running[0].running = False
                 list_blocked.append(process_running[0])
@@ -422,8 +422,6 @@ def stop_simulation():
     global stop
     stop = True
 
-
-
 # botones de los algoritmos
 main.algoritmo1.clicked.connect(algoritmo1)
 main.algoritmo2.clicked.connect(algoritmo2)
@@ -431,7 +429,6 @@ main.algoritmo3.clicked.connect(algoritmo3)
 main.algoritmo5.clicked.connect(algoritmo5)
 main.algoritmo6.clicked.connect(algoritmo6)
 main.salir.clicked.connect(quit)
-
 
 main.show()
 sys.exit(app.exec())
